@@ -1,4 +1,4 @@
-# svelte-cairn
+# cairn-svelte
 
 Svelte bindings for [Cairn](https://github.com/tomymaritano/cairn) — the
 workflow engine for onboarding, product adoption, and user guidance. A Svelte
@@ -7,12 +7,12 @@ workflow engine for onboarding, product adoption, and user guidance. A Svelte
 it's the only install you need). Works with Svelte 4 and 5.
 
 ```bash
-npm i svelte-cairn
+npm i cairn-svelte
 ```
 
 ```svelte
 <script>
-  import { createFlow, defineFlow } from "svelte-cairn";
+  import { createFlow, defineFlow } from "cairn-svelte";
 
   const onboarding = defineFlow({
     id: "onboarding",

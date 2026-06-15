@@ -1,5 +1,5 @@
 {
-  "name": "svelte-cairn",
+  "name": "cairn-svelte",
   "version": "0.1.0",
   "description": "Svelte bindings for Cairn — a store + controls for onboarding & guidance flows.",
   "license": "MIT",
