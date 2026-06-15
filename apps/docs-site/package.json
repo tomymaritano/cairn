@@ -10,7 +10,9 @@
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@xyflow/react": "^12.3.0",
     "ai": "^6.0.205",
+    "cairn-devtools": "workspace:*",
     "cairn-ui": "workspace:*",
     "fumadocs-core": "^16.10.2",
     "fumadocs-mdx": "^15.0.12",
