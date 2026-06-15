@@ -113,6 +113,19 @@ importers:
         specifier: ^5.4.2
         version: 5.4.21(@types/node@22.19.21)(lightningcss@1.32.0)
 
+  packages/ai:
+    dependencies:
+      ai:
+        specifier: ^6.0.0
+        version: 6.0.205(zod@4.4.3)
+      zod:
+        specifier: ^4.0.0
+        version: 4.4.3
+    devDependencies:
+      cairn-core:
+        specifier: workspace:^
+        version: link:../core
+
   packages/core: {}
 
   packages/react:
@@ -1127,6 +1140,7 @@ packages:
 
   '@one-ini/wasm@0.1.1':
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
+
   '@opentelemetry/api@1.9.1':
     resolution: {integrity: sha512-gLyJlPHPZYdAk1JENA9LeHejZe1Ti77/pTeFm/nMXmQH/HFZlcS/O2XJB+L8fkbrNSqhdtlvjBVjxwUYanNH5Q==}
     engines: {node: '>=8.0.0'}
@@ -4621,6 +4635,7 @@ snapshots:
       fastq: 1.20.1
 
   '@one-ini/wasm@0.1.1': {}
+
   '@opentelemetry/api@1.9.1': {}
 
   '@orama/orama@3.1.18': {}
