@@ -1,17 +1,17 @@
-# react-cairn
+# @cairn/react
 
 React bindings for [Cairn](https://github.com/tomymaritano/cairn) — the
 workflow engine for onboarding, product adoption, and user guidance. Built on
 `useSyncExternalStore` (concurrent-safe). Re-exports the entire
-[`cairn-core`](https://www.npmjs.com/package/cairn-core) surface, so this is
+[`@cairn/core`](https://www.npmjs.com/package/@cairn/core) surface, so this is
 the only package you need.
 
 ```bash
-npm i react-cairn
+npm i @cairn/react
 ```
 
 ```tsx
-import { FlowProvider, defineFlow, useFlow } from "react-cairn";
+import { FlowProvider, defineFlow, useFlow } from "@cairn/react";
 
 const onboarding = defineFlow({
   id: "onboarding",
@@ -44,6 +44,6 @@ function Tour() {
 ```
 
 Want accessible popover + spotlight out of the box? Add
-[`cairn-ui`](https://www.npmjs.com/package/cairn-ui).
+[`@cairn/ui`](https://www.npmjs.com/package/@cairn/ui).
 
 📖 **[Full documentation & live demo →](https://react-cairn.vercel.app)**

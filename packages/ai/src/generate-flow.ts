@@ -1,5 +1,5 @@
 import { generateObject } from "ai";
-import type { FlowDefinition } from "cairn-core";
+import type { FlowDefinition } from "@cairn/core";
 import { FlowSpecSchema, type FlowSpec } from "./spec.js";
 import { validateSpec } from "./validate-spec.js";
 import { specToCode } from "./spec-to-code.js";
@@ -32,7 +32,7 @@ export interface GenerateFlowResult<C extends object = Record<string, unknown>> 
   spec: FlowSpec;
   /** A ready-to-paste `defineFlow(...)` TypeScript source. */
   code: string;
-  /** A runnable flow (run it, or render it with cairn-devtools). */
+  /** A runnable flow (run it, or render it with @cairn/devtools). */
   flow: FlowDefinition<C>;
 }
 

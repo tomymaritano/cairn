@@ -1,8 +1,8 @@
-# cairn-devtools — `<FlowGraph>` flow visualizer (v1)
+# @cairn/devtools — `<FlowGraph>` flow visualizer (v1)
 
 **Date:** 2026-06-15
 **Status:** Approved (design)
-**New package:** `cairn-devtools` (0.1.0)
+**New package:** `@cairn/devtools` (0.1.0)
 
 ## Goal
 
@@ -20,25 +20,25 @@ read-only sidesteps the hard "branching-as-functions-vs-data" problem entirely.
 ## Decisions (resolved during brainstorming)
 
 - **Scope v1:** visualizer, read-only.
-- **Form:** an embeddable React component, shipped as `cairn-devtools`.
+- **Form:** an embeddable React component, shipped as `@cairn/devtools`.
 - **Live trace (`engine` prop):** in scope for v1 — the headline feature.
 - **Rendering:** React Flow (`@xyflow/react`) + dagre auto-layout.
-- **Name:** `cairn-devtools`.
+- **Name:** `@cairn/devtools`.
 
 ## Package
 
-`cairn-devtools` (unscoped, public, 0.1.0). React-only component.
+`@cairn/devtools` (unscoped, public, 0.1.0). React-only component.
 
 - **dependencies:** `@xyflow/react`, `@dagrejs/dagre`
-- **peerDependencies:** `react >=18`, `cairn-core` (types). `react-cairn` is NOT
+- **peerDependencies:** `react >=18`, `@cairn/core` (types). `@cairn/react` is NOT
   required — live mode subscribes to the `FlowEngine` directly via its
-  `subscribe`/`getState` contract from `cairn-core`.
-- Marked `"use client"` (interactive component; post-build prepend like cairn-ui).
+  `subscribe`/`getState` contract from `@cairn/core`.
+- Marked `"use client"` (interactive component; post-build prepend like @cairn/ui).
 
 ## API
 
 ```tsx
-import { FlowGraph } from "cairn-devtools";
+import { FlowGraph } from "@cairn/devtools";
 
 <FlowGraph
   flow={onboarding}              // FlowDefinition<C> — the graph source (required)
@@ -91,7 +91,7 @@ This function has no React/DOM/React-Flow dependency and is the unit-test target
 ### Live trace (when `engine` is provided)
 
 - Subscribe via `engine.subscribe` (+ seed `engine.getState()`); unsubscribe on
-  unmount. (Uses the core contract directly — no `react-cairn` dependency.)
+  unmount. (Uses the core contract directly — no `@cairn/react` dependency.)
 - From the live `FlowState`: highlight `currentStepId`, mark `history` nodes as
   visited, draw "taken" edges along the history path (this reveals the dynamic
   branches static analysis can't), and show `running` (pulsing) / `error` (red)
@@ -111,12 +111,12 @@ a global MDX component and added to `meta.json`.
   → "async" badge; `canEnter` → "guarded"; terminal → "end"; start badge.
   Plain JS, no DOM.
 - **Component smoke (jsdom)**: `<FlowGraph>` renders without crashing and emits a
-  node per step. (React Flow needs sizing/ResizeObserver — polyfill like cairn-ui;
+  node per step. (React Flow needs sizing/ResizeObserver — polyfill like @cairn/ui;
   assert the graph model wired through, not pixel layout.)
 
 ## Versioning / release
 
-New package `cairn-devtools@0.1.0`. Independent of the published 0.2.0 line.
+New package `@cairn/devtools@0.1.0`. Independent of the published 0.2.0 line.
 Publish via the same flow (CI on `NPM_TOKEN`, or manual `pnpm publish`).
 
 ## Out of scope (v1)

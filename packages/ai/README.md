@@ -1,15 +1,15 @@
-# cairn-ai
+# @cairn/ai
 
 Generate [Cairn](https://github.com/tomymaritano/cairn) flows from a
 natural-language prompt. Returns a validated declarative spec, ready-to-paste
 `defineFlow(...)` code, and a runnable flow.
 
 ```bash
-npm i cairn-ai
+npm i @cairn/ai
 ```
 
 ```ts
-import { generateFlow } from "cairn-ai";
+import { generateFlow } from "@cairn/ai";
 
 const { spec, code, flow } = await generateFlow(
   "onboard a new user to the billing page; if usage is over 80%, push the upgrade",
@@ -17,7 +17,7 @@ const { spec, code, flow } = await generateFlow(
 );
 
 console.log(code);  // paste-ready defineFlow(...)
-// `flow` is runnable now — render it with cairn-devtools or run it with a FlowEngine
+// `flow` is runnable now — render it with @cairn/devtools or run it with a FlowEngine
 ```
 
 ## How it's safe
@@ -48,7 +48,7 @@ const { code } = await generateFlow("…", {
 ## Exports
 
 `generateFlow` · `specToCode` · `specToFlow` · `validateSpec` · `compare` ·
-`FlowSpecSchema` (+ types). Deps: `ai`, `zod`. Peer: `cairn-core`.
+`FlowSpecSchema` (+ types). Deps: `ai`, `zod`. Peer: `@cairn/core`.
 
 ## Not in v1
 

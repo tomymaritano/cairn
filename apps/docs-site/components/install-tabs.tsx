@@ -4,10 +4,10 @@ import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 
 const MANAGERS = [
-  { id: "npm", cmd: "npm install react-cairn" },
-  { id: "pnpm", cmd: "pnpm add react-cairn" },
-  { id: "yarn", cmd: "yarn add react-cairn" },
-  { id: "bun", cmd: "bun add react-cairn" },
+  { id: "npm", cmd: "npm install @cairn/react" },
+  { id: "pnpm", cmd: "pnpm add @cairn/react" },
+  { id: "yarn", cmd: "yarn add @cairn/react" },
+  { id: "bun", cmd: "bun add @cairn/react" },
 ];
 
 /** Package-manager install tabs for the landing hero. */

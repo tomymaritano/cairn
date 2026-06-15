@@ -1,14 +1,14 @@
-# cairn-devtools
+# @cairn/devtools
 
 Visualize [Cairn](https://github.com/tomymaritano/cairn) flows as a graph — the
 static structure, and the **live runtime trace** as a flow runs.
 
 ```bash
-npm i cairn-devtools
+npm i @cairn/devtools
 ```
 
 ```tsx
-import { FlowGraph } from "cairn-devtools";
+import { FlowGraph } from "@cairn/devtools";
 import "@xyflow/react/dist/style.css"; // once, app-wide
 
 // Static structure:
@@ -31,7 +31,7 @@ import "@xyflow/react/dist/style.css"; // once, app-wide
 ## API
 
 - **`<FlowGraph flow engine? direction? onSelectStep? />`** — React Flow + dagre
-  auto-layout. Peers: `react`, `cairn-core`.
+  auto-layout. Peers: `react`, `@cairn/core`.
 - **`buildGraph(flow)`** — the pure flow→`{ nodes, edges, dynamic }` model behind
   the component, exported for custom renderers.
 

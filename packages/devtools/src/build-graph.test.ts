@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { defineFlow } from "cairn-core";
+import { defineFlow } from "@cairn/core";
 import { buildGraph } from "./build-graph.js";
 
 interface Ctx {

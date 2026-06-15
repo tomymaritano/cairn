@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   clean: true,
   treeshake: true,
-  external: ["ai", "zod", "cairn-core"],
+  external: ["ai", "zod", "@cairn/core"],
 });

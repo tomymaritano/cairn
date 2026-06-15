@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render } from "@testing-library/react";
-import { FlowEngine, defineFlow } from "cairn-core";
+import { FlowEngine, defineFlow } from "@cairn/core";
 import { FlowGraph } from "./flow-graph.js";
 
 afterEach(cleanup);

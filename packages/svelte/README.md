@@ -1,18 +1,18 @@
-# cairn-svelte
+# @cairn/svelte
 
 Svelte bindings for [Cairn](https://github.com/tomymaritano/cairn) — the
 workflow engine for onboarding, product adoption, and user guidance. A Svelte
 **store** + controls over the framework-agnostic
-[`cairn-core`](https://www.npmjs.com/package/cairn-core) engine (re-exported, so
+[`@cairn/core`](https://www.npmjs.com/package/@cairn/core) engine (re-exported, so
 it's the only install you need). Works with Svelte 4 and 5.
 
 ```bash
-npm i cairn-svelte
+npm i @cairn/svelte
 ```
 
 ```svelte
 <script>
-  import { createFlow, defineFlow } from "cairn-svelte";
+  import { createFlow, defineFlow } from "@cairn/svelte";
 
   const onboarding = defineFlow({
     id: "onboarding",

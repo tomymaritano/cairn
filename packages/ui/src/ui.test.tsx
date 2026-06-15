@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { FlowProvider, defineFlow, useFlow } from "react-cairn";
+import { FlowProvider, defineFlow, useFlow } from "@cairn/react";
 import { CairnPopover } from "./popover.js";
 import { CairnSpotlight } from "./spotlight.js";
 

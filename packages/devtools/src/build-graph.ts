@@ -1,4 +1,4 @@
-import type { FlowDefinition } from "cairn-core";
+import type { FlowDefinition } from "@cairn/core";
 
 export type Badge = "start" | "end" | "async" | "guarded" | "dynamic";
 

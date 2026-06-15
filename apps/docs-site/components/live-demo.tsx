@@ -6,8 +6,8 @@ import {
   FlowProvider,
   defineFlow,
   useFlow,
-} from "react-cairn";
-import { CairnPopover } from "cairn-ui";
+} from "@cairn/react";
+import { CairnPopover } from "@cairn/ui";
 
 interface Ctx {
   teamPlan: boolean;

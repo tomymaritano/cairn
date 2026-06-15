@@ -1,5 +1,5 @@
 {
-  "name": "cairn-core",
+  "name": "@cairn/core",
   "version": "0.2.0",
   "description": "Framework-agnostic state-machine engine for onboarding & product guidance flows.",
   "license": "MIT",

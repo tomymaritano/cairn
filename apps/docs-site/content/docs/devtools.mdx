@@ -5,16 +5,16 @@ description: Visualize a flow as a graph — its static structure, and the live 
 
 # Devtools — `<FlowGraph>`
 
-Complex flows are hard to read as code. `cairn-devtools` renders any flow as a
+Complex flows are hard to read as code. `@cairn/devtools` renders any flow as a
 graph — steps as nodes, `next`/`onError` as edges — and, when you hand it a live
 engine, **lights up the running flow in real time**.
 
 ```bash
-npm i cairn-devtools
+npm i @cairn/devtools
 ```
 
 ```tsx
-import { FlowGraph } from "cairn-devtools";
+import { FlowGraph } from "@cairn/devtools";
 import "@xyflow/react/dist/style.css"; // once, app-wide
 
 <FlowGraph flow={onboarding} engine={engine} />;

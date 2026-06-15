@@ -1,4 +1,4 @@
-import { defineFlow, type FlowDefinition, type StepDefinition } from "cairn-core";
+import { defineFlow, type FlowDefinition, type StepDefinition } from "@cairn/core";
 import type { FlowSpec, Operator, StepSpec } from "./spec.js";
 
 /** Evaluate a single comparison. Built by us from declarative data — never `eval`. */

@@ -12,14 +12,14 @@
   "dependencies": {
     "@xyflow/react": "^12.3.0",
     "ai": "^6.0.205",
-    "cairn-devtools": "workspace:*",
-    "cairn-ui": "workspace:*",
+    "@cairn/devtools": "workspace:*",
+    "@cairn/ui": "workspace:*",
     "fumadocs-core": "^16.10.2",
     "fumadocs-mdx": "^15.0.12",
     "fumadocs-ui": "^16.10.2",
     "next": "16.2.9",
     "react": "^19.2.0",
-    "react-cairn": "workspace:*",
+    "@cairn/react": "workspace:*",
     "react-dom": "^19.2.0",
     "zod": "^4.4.3"
   },

@@ -15,7 +15,7 @@ already finished should never reappear. Cairn handles both with
 Pass a `persistence` config when you build the engine:
 
 ```ts
-import { FlowEngine, createWebStorageAdapter } from "cairn-core";
+import { FlowEngine, createWebStorageAdapter } from "@cairn/core";
 
 const engine = new FlowEngine(onboarding, {
   persistence: {
@@ -81,7 +81,7 @@ An adapter is just three synchronous methods. Back it with cookies, a sync
 in-memory cache hydrated from your API, anything:
 
 ```ts
-import type { PersistenceAdapter } from "cairn-core";
+import type { PersistenceAdapter } from "@cairn/core";
 
 const myAdapter: PersistenceAdapter = {
   load: (key) => myStore.get(key) ?? null,

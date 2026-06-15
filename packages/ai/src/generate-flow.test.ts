@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FlowEngine } from "cairn-core";
+import { FlowEngine } from "@cairn/core";
 import { generateFlow } from "./generate-flow.js";
 
 // A canned model output — exercises the whole pipeline with no real LLM.

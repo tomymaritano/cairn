@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FlowEngine } from "cairn-core";
+import { FlowEngine } from "@cairn/core";
 import { compare, specToFlow } from "./spec-to-flow.js";
 import type { FlowSpec } from "./spec.js";
 

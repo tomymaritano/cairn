@@ -3,7 +3,7 @@ import {
   FlowEngine,
   type EngineOptions,
   type FlowDefinition,
-} from "cairn-core";
+} from "@cairn/core";
 import type { ReactNode } from "react";
 
 const EngineContext = createContext<FlowEngine<any> | null>(null);

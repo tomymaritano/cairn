@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react-cairn": "workspace:*",
-    "cairn-ui": "workspace:*",
+    "@cairn/react": "workspace:*",
+    "@cairn/ui": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

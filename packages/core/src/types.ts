@@ -23,7 +23,7 @@ export type StepGuard<C extends object> = (ctx: Readonly<C>) => boolean;
 
 /**
  * A single waypoint in a flow. `meta` is an open bag the renderer
- * (`react-cairn`, future Vue/Svelte adapters) reads to draw UI —
+ * (`@cairn/react`, future Vue/Svelte adapters) reads to draw UI —
  * the core never touches it, keeping the engine framework-agnostic.
  */
 export interface StepDefinition<C extends object = FlowContext> {

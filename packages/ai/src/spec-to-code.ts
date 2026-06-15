@@ -70,7 +70,7 @@ function stepCode(s: StepSpec): string {
  */
 export function specToCode(spec: FlowSpec): string {
   const steps = spec.steps.map((s) => `    ${stepCode(s)},`).join("\n");
-  return `import { defineFlow } from "cairn-core";
+  return `import { defineFlow } from "@cairn/core";
 
 export const ${exportName(spec.id)} = defineFlow<${ctxType(spec.initialContext)}>({
   id: ${lit(spec.id)},

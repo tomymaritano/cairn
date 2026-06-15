@@ -16,7 +16,7 @@ import {
   useRole,
   type Placement,
 } from "@floating-ui/react";
-import { useFlow, type StepDefinition } from "react-cairn";
+import { useFlow, type StepDefinition } from "@cairn/react";
 import { useTargetElement } from "./use-target.js";
 import type { CSSProperties, ReactNode } from "react";
 

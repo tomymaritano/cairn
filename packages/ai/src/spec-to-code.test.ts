@@ -17,7 +17,7 @@ describe("specToCode", () => {
   const code = specToCode(spec);
 
   it("imports and exports a named defineFlow with an inferred context type", () => {
-    expect(code).toContain('import { defineFlow } from "cairn-core";');
+    expect(code).toContain('import { defineFlow } from "@cairn/core";');
     expect(code).toContain("export const onboarding = defineFlow<{ usage: number; plan: string }>(");
   });
 

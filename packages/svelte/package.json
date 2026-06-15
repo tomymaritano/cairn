@@ -1,5 +1,5 @@
 {
-  "name": "cairn-svelte",
+  "name": "@cairn/svelte",
   "version": "0.1.0",
   "description": "Svelte bindings for Cairn — a store + controls for onboarding & guidance flows.",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "cairn-core": "workspace:^"
+    "@cairn/core": "workspace:^"
   },
   "peerDependencies": {
     "svelte": ">=4"

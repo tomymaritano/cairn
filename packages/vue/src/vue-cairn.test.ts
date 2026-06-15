@@ -41,7 +41,7 @@ function mountFlow() {
   return { wrapper, engine };
 }
 
-describe("vue-cairn", () => {
+describe("@cairn/vue", () => {
   it("starts on the first step", () => {
     const { wrapper } = mountFlow();
     expect(wrapper.find(".step").text()).toBe("a");

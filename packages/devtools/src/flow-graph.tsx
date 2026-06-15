@@ -16,7 +16,7 @@ import type {
   FlowEngine,
   FlowState,
   StepDefinition,
-} from "cairn-core";
+} from "@cairn/core";
 import { buildGraph, type Badge, type EdgeKind } from "./build-graph.js";
 import type { CSSProperties } from "react";
 

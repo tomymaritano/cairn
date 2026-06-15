@@ -14,7 +14,7 @@ import {
   type FlowDefinition,
   type FlowState,
   type StepDefinition,
-} from "cairn-core";
+} from "@cairn/core";
 
 const ENGINE_KEY: InjectionKey<FlowEngine<any>> = Symbol("cairn-engine");
 
@@ -101,4 +101,4 @@ export {
   type CairnEventType,
   type PersistenceAdapter,
   type PersistenceConfig,
-} from "cairn-core";
+} from "@cairn/core";

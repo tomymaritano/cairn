@@ -1,5 +1,5 @@
 {
-  "name": "cairn-devtools",
+  "name": "@cairn/devtools",
   "version": "0.1.0",
   "description": "Visualize Cairn flows as a graph — static structure + live runtime trace.",
   "license": "MIT",
@@ -30,12 +30,12 @@
     "@xyflow/react": "^12.3.0"
   },
   "peerDependencies": {
-    "cairn-core": "workspace:^",
+    "@cairn/core": "workspace:^",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "cairn-core": "workspace:^",
+    "@cairn/core": "workspace:^",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.1",
     "@types/react": "^19.2.0",

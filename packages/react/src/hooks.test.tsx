@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { defineFlow } from "cairn-core";
+import { defineFlow } from "@cairn/core";
 import { FlowProvider } from "./context.js";
 import { useCurrentStep, useFlow } from "./hooks.js";
 

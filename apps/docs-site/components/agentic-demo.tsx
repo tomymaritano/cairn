@@ -6,8 +6,8 @@ import {
   FlowProvider,
   defineFlow,
   useFlow,
-} from "react-cairn";
-import { CairnPopover } from "cairn-ui";
+} from "@cairn/react";
+import { CairnPopover } from "@cairn/ui";
 
 // ---------------------------------------------------------------------------
 // Demo context + pluggable agent
@@ -25,7 +25,7 @@ interface DemoCtx {
 
 /**
  * The agent seam. Anything "agent"-shaped lives here in userland, NOT in
- * cairn-core — the core only knows about an async `run` returning a context
+ * @cairn/core — the core only knows about an async `run` returning a context
  * patch. Swap `SimAgent` for an `LLMAgent` (same interface) to call a real
  * model behind a serverless route later; nothing else in the demo changes.
  */

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from "react";
-import type { FlowEngine, FlowState } from "cairn-core";
+import type { FlowEngine, FlowState } from "@cairn/core";
 import { useEngine } from "./context.js";
 
 export interface FlowControls<C extends object> {

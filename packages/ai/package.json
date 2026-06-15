@@ -1,5 +1,5 @@
 {
-  "name": "cairn-ai",
+  "name": "@cairn/ai",
   "version": "0.1.0",
   "description": "Generate Cairn flows from a natural-language prompt — declarative spec + defineFlow code + a runnable flow.",
   "license": "MIT",
@@ -30,10 +30,10 @@
     "zod": "^4.0.0"
   },
   "peerDependencies": {
-    "cairn-core": "workspace:^"
+    "@cairn/core": "workspace:^"
   },
   "devDependencies": {
-    "cairn-core": "workspace:^"
+    "@cairn/core": "workspace:^"
   },
   "keywords": ["cairn", "ai", "flow", "generate", "onboarding", "codegen"]
 }

@@ -5,5 +5,5 @@
 ### Patch Changes
 
 - Updated dependencies
-  - react-cairn@0.2.0
-  - cairn-ui@1.0.0
+  - @cairn/react@0.2.0
+  - @cairn/ui@1.0.0

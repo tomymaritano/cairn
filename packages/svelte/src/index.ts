@@ -4,7 +4,7 @@ import {
   type EngineOptions,
   type FlowDefinition,
   type FlowState,
-} from "cairn-core";
+} from "@cairn/core";
 
 export interface FlowApi<C extends object> {
   /** A Svelte readable store of the live flow state. Use as `$flow.state`. */
@@ -87,4 +87,4 @@ export {
   type CairnEventType,
   type PersistenceAdapter,
   type PersistenceConfig,
-} from "cairn-core";
+} from "@cairn/core";
