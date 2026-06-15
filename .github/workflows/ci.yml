@@ -37,3 +37,29 @@ jobs:
 
       - name: Verify (build + typecheck + test)
         run: pnpm verify
+
+  docs:
+    name: Docs build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build libraries (docs consume their types)
+        run: pnpm --filter "./packages/*" build
+
+      - name: Build docs site
+        run: pnpm --filter @cairn/docs build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
