@@ -1,0 +1,23 @@
+{
+  "name": "cairn",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The workflow engine for onboarding, product adoption, and user guidance.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@9.7.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "play": "pnpm --filter @cairn/playground dev",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "verify": "pnpm build && pnpm typecheck && pnpm test",
+    "clean": "pnpm -r clean"
+  },
+  "devDependencies": {
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

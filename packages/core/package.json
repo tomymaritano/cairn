@@ -1,0 +1,33 @@
+{
+  "name": "@cairn/core",
+  "version": "0.0.0",
+  "description": "Framework-agnostic state-machine engine for onboarding & product guidance flows.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "onboarding",
+    "product-tour",
+    "user-guidance",
+    "workflow-engine",
+    "state-machine",
+    "product-adoption"
+  ]
+}
