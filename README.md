@@ -32,15 +32,15 @@ The engine is **framework-agnostic**; React is the first official binding (Vue a
 ## Install
 
 ```bash
-npm i @cairn/react        # React bindings (re-exports the core)
+npm i react-cairn        # React bindings (re-exports the core)
 # or just the engine, for any framework / a custom renderer:
-npm i @cairn/core
+npm i cairn-core
 ```
 
 ## Quickstart
 
 ```tsx
-import { FlowProvider, defineFlow, useFlow } from "@cairn/react";
+import { FlowProvider, defineFlow, useFlow } from "react-cairn";
 
 // 1. Define a flow. `next` can branch on live context.
 const onboarding = defineFlow<{ hasTeam: boolean }>({
@@ -82,12 +82,12 @@ function Tour() {
 
 ## Headless UI, if you want it
 
-`@cairn/ui` gives you an accessible popover (positioned with Floating UI:
+`cairn-ui` gives you an accessible popover (positioned with Floating UI:
 flip, shift, follows the target through scroll) and a spotlight overlay. Cairn
 owns positioning and a11y; **you own the content and styling**.
 
 ```tsx
-import { CairnSpotlight, CairnPopover } from "@cairn/ui";
+import { CairnSpotlight, CairnPopover } from "cairn-ui";
 
 <FlowProvider engine={engine}>
   <App />
@@ -103,7 +103,7 @@ import { CairnSpotlight, CairnPopover } from "@cairn/ui";
 </FlowProvider>;
 ```
 
-Prefer your own components? Skip `@cairn/ui` entirely and render from
+Prefer your own components? Skip `cairn-ui` entirely and render from
 `useFlow()` — the engine doesn't care.
 
 ## Analytics, for free
@@ -111,7 +111,7 @@ Prefer your own components? Skip `@cairn/ui` entirely and render from
 Every transition is a typed event. Pipe the firehose to PostHog, Segment, anything:
 
 ```ts
-import { FlowEngine } from "@cairn/core";
+import { FlowEngine } from "cairn-core";
 
 const engine = new FlowEngine(onboarding);
 engine.onAny((event) => {
@@ -127,7 +127,7 @@ Onboarding spans sessions. Point Cairn at any key-value store and it resumes
 where the user left off — and won't re-show a flow they already finished.
 
 ```ts
-import { FlowEngine, createWebStorageAdapter } from "@cairn/core";
+import { FlowEngine, createWebStorageAdapter } from "cairn-core";
 
 const engine = new FlowEngine(onboarding, {
   persistence: {
@@ -146,16 +146,16 @@ Bring your own store by implementing three methods — `load`, `save`, `remove`.
 
 | Package | What it is |
 |---------|------------|
-| [`@cairn/core`](./packages/core) | Framework-agnostic state-machine engine. Zero dependencies. |
-| [`@cairn/react`](./packages/react) | React bindings: `<FlowProvider>`, `useFlow()`, `useCurrentStep()`. |
-| [`@cairn/ui`](./packages/ui) | Headless, accessible primitives: `<CairnSpotlight>`, `<CairnPopover>`. |
+| [`cairn-core`](./packages/core) | Framework-agnostic state-machine engine. Zero dependencies. |
+| [`react-cairn`](./packages/react) | React bindings: `<FlowProvider>`, `useFlow()`, `useCurrentStep()`. |
+| [`cairn-ui`](./packages/ui) | Headless, accessible primitives: `<CairnSpotlight>`, `<CairnPopover>`. |
 
 ## Roadmap
 
 - [x] Framework-agnostic engine (branching, guards, history, events)
 - [x] React bindings (`useSyncExternalStore`, concurrent-safe)
 - [x] Persistence adapters (resume a flow across sessions)
-- [x] Headless UI primitives (`@cairn/ui`) — accessible popover + spotlight
+- [x] Headless UI primitives (`cairn-ui`) — accessible popover + spotlight
 - [ ] Vue & Svelte adapters
 - [ ] **Visual flow builder**
 

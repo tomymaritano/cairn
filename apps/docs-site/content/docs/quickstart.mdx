@@ -8,14 +8,14 @@ description: Install Cairn, define a flow, and render your first guided onboardi
 ## Install
 
 ```bash
-npm i @cairn/react
+npm i react-cairn
 # the React package re-exports the core, so this is all you need
 ```
 
 For a non-React app or a custom renderer, install just the engine:
 
 ```bash
-npm i @cairn/core
+npm i cairn-core
 ```
 
 ## 1. Define a flow
@@ -24,7 +24,7 @@ A flow is a list of **steps**. Each step knows where to go `next` — and
 `next` can be a function that branches on live context.
 
 ```tsx
-import { defineFlow } from "@cairn/react";
+import { defineFlow } from "react-cairn";
 
 const onboarding = defineFlow<{ hasTeam: boolean }>({
   id: "onboarding",
@@ -53,7 +53,7 @@ const onboarding = defineFlow<{ hasTeam: boolean }>({
 ## 2. Wrap your app
 
 ```tsx
-import { FlowProvider } from "@cairn/react";
+import { FlowProvider } from "react-cairn";
 
 function App() {
   return (
@@ -71,7 +71,7 @@ Cairn owns the logic; **you own the UI**. The `meta` bag carries whatever
 your renderer needs (a target selector, a title, a body…).
 
 ```tsx
-import { useFlow } from "@cairn/react";
+import { useFlow } from "react-cairn";
 
 function Tour() {
   const { state, next, back, skip } = useFlow<{ hasTeam: boolean }>();

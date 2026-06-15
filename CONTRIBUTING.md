@@ -49,8 +49,8 @@ PR publishes the changed packages to npm (with provenance).
 
 | Path                  | What                                         |
 | --------------------- | -------------------------------------------- |
-| `packages/core`       | `@cairn/core` — framework-agnostic engine    |
-| `packages/react`      | `@cairn/react` — React bindings              |
-| `packages/ui`         | `@cairn/ui` — headless accessible primitives |
+| `packages/core`       | `cairn-core` — framework-agnostic engine    |
+| `packages/react`      | `react-cairn` — React bindings              |
+| `packages/ui`         | `cairn-ui` — headless accessible primitives |
 | `examples/playground` | Vite demo (`pnpm play`)                      |
 | `apps/docs-site`      | Fumadocs docs (`pnpm docs`)                  |

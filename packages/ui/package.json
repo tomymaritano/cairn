@@ -1,5 +1,5 @@
 {
-  "name": "@cairn/ui",
+  "name": "cairn-ui",
   "version": "0.1.0",
   "description": "Headless, accessible UI primitives for Cairn flows — spotlight & anchored popover.",
   "license": "MIT",
@@ -31,12 +31,12 @@
     "@floating-ui/react": "^0.27.0"
   },
   "peerDependencies": {
-    "@cairn/react": "workspace:*",
+    "react-cairn": "workspace:*",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@cairn/react": "workspace:*",
+    "react-cairn": "workspace:*",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.0.1",
     "@types/react": "^19.2.0",

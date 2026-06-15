@@ -19,4 +19,4 @@ export {
   type PersistenceAdapter,
   type PersistenceConfig,
   type PersistedFlow,
-} from "@cairn/core";
+} from "cairn-core";

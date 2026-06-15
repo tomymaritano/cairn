@@ -6,8 +6,8 @@ import {
   defineFlow,
   useFlow,
   type CairnEvent,
-} from "@cairn/react";
-import { CairnPopover, CairnSpotlight } from "@cairn/ui";
+} from "react-cairn";
+import { CairnPopover, CairnSpotlight } from "cairn-ui";
 
 /**
  * Demo flow. `profile` branches on live context: with a team you get the
@@ -48,7 +48,7 @@ export function App() {
     <FlowProvider engine={engine}>
       <FakeApp />
 
-      {/* The entire guided UI is now two components from @cairn/ui. */}
+      {/* The entire guided UI is now two components from cairn-ui. */}
       <CairnSpotlight padding={6} />
       <CairnPopover className="cairn-card">
         {(step) => <StepCard title={String(step.meta?.title)} body={String(step.meta?.body ?? "")} />}
@@ -136,7 +136,7 @@ const css = `
   .avatar { width: 34px; height: 34px; border-radius: 50%; background: #4f46e5; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
   main { padding: 40px; }
   h1 { margin: 0 0 8px; }
-  /* Style the @cairn/ui popover via its data/class hook — you keep full control. */
+  /* Style the cairn-ui popover via its data/class hook — you keep full control. */
   .cairn-card { width: 280px; background: #fff; color: #15171c; border-radius: 12px; padding: 16px; box-shadow: 0 18px 50px rgba(0,0,0,.45); }
   .cairn-card [data-cairn-arrow] { fill: #fff; }
   .card-step { font-size: 12px; color: #6b7280; }

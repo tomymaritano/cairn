@@ -1,5 +1,5 @@
 {
-  "name": "@cairn/react",
+  "name": "react-cairn",
   "version": "0.1.0",
   "description": "React bindings for Cairn — hooks and provider for onboarding & guidance flows.",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@cairn/core": "workspace:*"
+    "cairn-core": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18"

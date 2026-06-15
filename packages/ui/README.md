@@ -1,11 +1,11 @@
-# @cairn/ui
+# cairn-ui
 
 Headless, accessible UI primitives for [Cairn](https://github.com/tomymaritano/cairn)
 flows. Cairn owns the hard parts — positioning and accessibility — and you own
 the content and styling.
 
 ```bash
-npm i @cairn/ui @cairn/react
+npm i cairn-ui react-cairn
 ```
 
 ## Components
@@ -54,4 +54,4 @@ For custom renderers:
 
 - The package is marked `"use client"` — safe to import from React Server
   Components.
-- `@cairn/react` and `react` / `react-dom` are peer dependencies.
+- `react-cairn` and `react` / `react-dom` are peer dependencies.

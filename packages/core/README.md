@@ -1,15 +1,15 @@
-# @cairn/core
+# cairn-core
 
 The framework-agnostic state-machine engine behind
 [Cairn](https://github.com/tomymaritano/cairn) — the workflow engine for
 onboarding, product adoption, and user guidance. Zero dependencies.
 
 ```bash
-npm i @cairn/core
+npm i cairn-core
 ```
 
 ```ts
-import { FlowEngine, defineFlow } from "@cairn/core";
+import { FlowEngine, defineFlow } from "cairn-core";
 
 const flow = defineFlow<{ hasTeam: boolean }>({
   id: "onboarding",
@@ -30,7 +30,7 @@ Features: branching (`next` resolves on live context), `canEnter` guards,
 history/back-navigation, a typed event stream for analytics, and
 persistence/resume adapters.
 
-Using React? Install [`@cairn/react`](https://www.npmjs.com/package/@cairn/react)
+Using React? Install [`react-cairn`](https://www.npmjs.com/package/react-cairn)
 instead — it re-exports this package.
 
 📖 **[Full documentation →](https://github.com/tomymaritano/cairn)**

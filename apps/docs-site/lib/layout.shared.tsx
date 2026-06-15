@@ -25,7 +25,7 @@ export function baseOptions(): BaseLayoutProps {
         type: "icon",
         icon: <NpmIcon />,
         text: "npm",
-        url: "https://www.npmjs.com/package/@cairn/react",
+        url: "https://www.npmjs.com/package/react-cairn",
         external: true,
       },
     ],
