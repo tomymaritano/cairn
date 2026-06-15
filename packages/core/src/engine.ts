@@ -47,6 +47,18 @@ export class FlowEngine<C extends object = FlowContext> {
   private currentStepId: string | null = null;
   private context: C;
   private history: string[] = [];
+  private running = false;
+  private error: Error | null = null;
+
+  /**
+   * Monotonic token identifying the in-flight `run`. Incremented whenever the
+   * flow leaves the step (or starts a new run). Only the run holding the
+   * latest token may mutate state — this discards aborted/stale results and
+   * guards React StrictMode double-invokes.
+   */
+  private runGeneration = 0;
+  /** Aborts the in-flight `run` when the flow leaves the step. */
+  private runController: AbortController | null = null;
 
   /** Cached so `subscribe()` can return a stable reference (React-safe). */
   private snapshot: FlowState<C>;
@@ -98,6 +110,8 @@ export class FlowEngine<C extends object = FlowContext> {
     this.status = "active";
     this.history = [];
     this.context = { ...this.initialContext };
+    this.running = false;
+    this.error = null;
     const first = this.definition.initialStep ?? this.definition.steps[0]!.id;
     this.commit();
     this.emit("flow:start", { flowId: this.definition.id, state: this.snapshot });
@@ -109,11 +123,14 @@ export class FlowEngine<C extends object = FlowContext> {
    * next `start()` runs from scratch (e.g. "replay onboarding").
    */
   reset(): void {
+    this.cancelRun();
     if (this.persistence) clearPersisted(this.persistence, this.definition.id);
     this.status = "idle";
     this.currentStepId = null;
     this.history = [];
     this.context = { ...this.initialContext };
+    this.running = false;
+    this.error = null;
     this.commit();
   }
 
@@ -145,7 +162,10 @@ export class FlowEngine<C extends object = FlowContext> {
       this.currentStepId = saved.currentStepId;
       this.commit();
       this.emit("flow:resume", { flowId: this.definition.id, state: this.snapshot });
-      this.emitEnter(this.requireCurrentStep());
+      const step = this.requireCurrentStep();
+      this.emitEnter(step);
+      // Re-run the resumed step's action (runs are assumed idempotent).
+      if (step.run) this.startRun(step);
       return true;
     }
 
@@ -154,6 +174,9 @@ export class FlowEngine<C extends object = FlowContext> {
 
   next(): void {
     if (!this.assertActive()) return;
+    // A run is in flight; it auto-advances on settle. Ignore manual nexts to
+    // avoid double transitions.
+    if (this.running) return;
     const step = this.requireCurrentStep();
     const target = this.resolveTarget(step.next, undefined);
     if (target === null) {
@@ -170,8 +193,15 @@ export class FlowEngine<C extends object = FlowContext> {
     this.history.pop(); // drop current
     const prev = this.history[this.history.length - 1]!;
     this.currentStepId = prev;
+    // Landing on a fresh step clears any prior run state.
+    this.running = false;
+    this.error = null;
     this.commit();
-    this.emitEnter(this.requireCurrentStep());
+    const step = this.requireCurrentStep();
+    this.emitEnter(step);
+    // A run step is automated: re-entering it (via Back) must re-execute it,
+    // exactly like enter()/resume — otherwise the flow wedges on it.
+    if (step.run) this.startRun(step);
   }
 
   goTo(stepId: string): void {
@@ -182,7 +212,29 @@ export class FlowEngine<C extends object = FlowContext> {
     this.enter(stepId);
   }
 
-  /** Merge a patch into the live context and notify branching consumers. */
+  /**
+   * Clear the current step's error and re-execute its `run`. No-op if the
+   * step has no `run`, a run is already in flight, or the flow isn't active.
+   */
+  retry(): void {
+    if (!this.assertActive()) return;
+    if (this.running) return;
+    const step = this.requireCurrentStep();
+    if (!step.run) return;
+    this.error = null;
+    this.commit();
+    this.startRun(step);
+  }
+
+  /**
+   * Merge a patch into the live context and notify branching consumers.
+   *
+   * If a `run` is in flight, this patch applies immediately, but the run was
+   * decided against the context as it was when it started — on success the
+   * run's own patch merges last (last-write-wins per key). To re-decide after
+   * changing inputs, wait for the run to settle (`state.running`) and then
+   * `goTo()` the run step again, or `retry()`.
+   */
   setContext(patch: Partial<C>): void {
     this.context = { ...this.context, ...patch };
     this.commit();
@@ -204,6 +256,7 @@ export class FlowEngine<C extends object = FlowContext> {
   }
 
   destroy(): void {
+    this.cancelRun();
     this.emitter.clear();
     this.stateListeners.clear();
   }
@@ -235,11 +288,108 @@ export class FlowEngine<C extends object = FlowContext> {
     if (this.currentStepId) this.exitCurrent();
     this.currentStepId = stepId;
     this.history.push(stepId);
+    // Entering a fresh step clears any prior run state.
+    this.running = false;
+    this.error = null;
     this.commit();
     this.emitEnter(step);
+
+    if (step.run) this.startRun(step);
+  }
+
+  /**
+   * Begin (or restart) the current step's `run`. Captures a generation token
+   * so only the latest run for the step may settle into state.
+   */
+  private startRun(step: StepDefinition<C>): void {
+    const run = step.run;
+    if (!run) return;
+
+    this.cancelRun();
+    const generation = ++this.runGeneration;
+    const controller = new AbortController();
+    this.runController = controller;
+
+    this.running = true;
+    this.commit();
+    this.emit("step:run:start", {
+      flowId: this.definition.id,
+      step,
+      state: this.snapshot,
+    });
+
+    Promise.resolve(run(this.context, controller.signal)).then(
+      (patch) => this.onRunSuccess(generation, step, patch),
+      (err) => this.onRunError(generation, step, err),
+    );
+  }
+
+  private onRunSuccess(
+    generation: number,
+    step: StepDefinition<C>,
+    patch: Partial<C> | void,
+  ): void {
+    if (generation !== this.runGeneration) return; // aborted/stale
+    if (patch) this.context = { ...this.context, ...patch };
+    this.running = false;
+    this.runController = null;
+    this.commit();
+    this.emit("step:run:success", {
+      flowId: this.definition.id,
+      step,
+      state: this.snapshot,
+    });
+    // Auto-advance against the now-updated context.
+    const target = this.resolveTarget(step.next, undefined);
+    if (target === null) {
+      this.finish("completed", "flow:complete");
+      return;
+    }
+    this.enter(target);
+  }
+
+  private onRunError(
+    generation: number,
+    step: StepDefinition<C>,
+    err: unknown,
+  ): void {
+    if (generation !== this.runGeneration) return; // aborted/stale
+    const error = err instanceof Error ? err : new Error(String(err));
+    this.running = false;
+    this.runController = null;
+    this.error = step.onError !== undefined ? null : error;
+    this.commit();
+    this.emit("step:run:error", {
+      flowId: this.definition.id,
+      step,
+      error,
+      state: this.snapshot,
+    });
+    if (step.onError !== undefined) {
+      const target = this.resolveTarget(step.onError, undefined);
+      if (target === null) {
+        this.finish("completed", "flow:complete");
+        return;
+      }
+      this.enter(target);
+    }
+  }
+
+  /**
+   * Abort any in-flight run and bump the generation so its pending
+   * settlement is discarded (no stale context writes / auto-advance).
+   */
+  private cancelRun(): void {
+    if (this.runController) {
+      this.runController.abort();
+      this.runController = null;
+    }
+    this.runGeneration++;
+    this.running = false;
   }
 
   private exitCurrent(): void {
+    this.cancelRun();
     const step = this.stepsById.get(this.currentStepId ?? "");
     if (!step) return;
     this.emit("step:exit", {
@@ -288,7 +438,9 @@ export class FlowEngine<C extends object = FlowContext> {
   /** Recompute the cached snapshot, persist it, and notify subscribers. */
   private commit(): void {
     this.snapshot = this.computeSnapshot();
-    if (this.persistence && this.status !== "idle") {
+    // Persist only when a run has settled, never mid-flight, so a resumed
+    // snapshot never points at a half-finished async step.
+    if (this.persistence && this.status !== "idle" && !this.running) {
       writePersisted<C>(this.persistence, this.toPersisted());
     }
     for (const listener of this.stateListeners) listener(this.snapshot);
@@ -321,6 +473,8 @@ export class FlowEngine<C extends object = FlowContext> {
       history: [...this.history],
       stepIndex,
       totalSteps: this.definition.steps.length,
+      running: this.running,
+      error: this.error,
     });
   }
 }

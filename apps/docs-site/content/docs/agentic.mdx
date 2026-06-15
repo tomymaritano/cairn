@@ -1,0 +1,40 @@
+---
+title: Agentic guidance
+description: Let a flow reason about where to send the user next — then guide them there — instead of replaying a fixed script.
+---
+
+# Agentic guidance
+
+Static tour libraries replay a fixed cross-route script. Cairn flows can
+**reason**: a step can run an async action — fetch state, call an API, or ask an
+LLM — write the result into context, and **branch on it**. The output stays what
+Cairn is good at: in-product UI guidance.
+
+This is the `run` step. On entering a step with a `run`, the engine sets
+`state.running = true`, awaits your action, merges the returned context patch,
+then auto-advances via `next` (resolved against the freshly-patched context). If
+`run` rejects it routes to `onError`, or exposes `state.error` and stays so you
+can `retry()`.
+
+```ts
+{
+  id: "decide",
+  async run(ctx) {
+    const { next, reason } = await agent.decide(ctx);
+    return { route: next, reason };
+  },
+  next: (ctx) => ctx.route, // branch on what the agent decided
+}
+```
+
+The "agent" isn't a core concept — it's just userland behind your own interface.
+The demo below defines a `DemoAgent` and ships a deterministic `SimAgent` (no API
+keys, never flaky); an `LLMAgent` calling a real model swaps in behind the same
+interface.
+
+## Try it
+
+Toggle **Usage 90%** and watch the agent reason its way to a *different* route on
+the next run — billing when you're near your limit, team when there's headroom.
+
+<AgenticDemo />

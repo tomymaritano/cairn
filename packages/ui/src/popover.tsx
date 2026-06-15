@@ -97,6 +97,7 @@ export function CairnPopover({
           className={className}
           data-cairn-popover=""
           data-step={step!.id}
+          data-cairn-running={state.running ? "" : undefined}
           aria-label={typeof title === "string" ? title : undefined}
           {...getFloatingProps()}
         >
