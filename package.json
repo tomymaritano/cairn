@@ -14,9 +14,13 @@
     "typecheck": "pnpm -r typecheck",
     "verify": "pnpm --filter \"./packages/*\" build && pnpm --filter \"./packages/*\" typecheck && pnpm --filter \"./packages/*\" test",
     "docs": "pnpm --filter @cairn/docs dev",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm verify && changeset publish",
     "clean": "pnpm -r clean"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"

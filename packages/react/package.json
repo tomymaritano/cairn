@@ -1,11 +1,16 @@
 {
   "name": "@cairn/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React bindings for Cairn — hooks and provider for onboarding & guidance flows.",
   "license": "MIT",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -36,5 +41,11 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
-  "keywords": ["react", "onboarding", "product-tour", "user-guidance", "hooks"]
+  "keywords": [
+    "react",
+    "onboarding",
+    "product-tour",
+    "user-guidance",
+    "hooks"
+  ]
 }
