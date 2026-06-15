@@ -50,8 +50,8 @@ function nextCode(s: StepSpec): string {
   if (n.type === "step") return lit(n.to);
   if (n.type === "end") return "null";
   const cond = `${access(n.field)} ${JS_OP[n.op]} ${lit(n.value)}`;
-  const elseExpr = n.else === null ? "null" : lit(n.else);
-  return `(ctx) => (${cond} ? ${lit(n.then)} : ${elseExpr})`;
+  const elseExpr = n.ifFalse === null ? "null" : lit(n.ifFalse);
+  return `(ctx) => (${cond} ? ${lit(n.ifTrue)} : ${elseExpr})`;
 }
 
 function stepCode(s: StepSpec): string {

@@ -7,9 +7,9 @@ const spec: FlowSpec = {
   initialContext: { usage: 0, plan: "free" },
   steps: [
     { id: "welcome", title: "Hi", target: "#logo", next: { type: "step", to: "decide" } },
-    { id: "decide", next: { type: "branch", field: "usage", op: ">=", value: 80, then: "upgrade", else: "team" } },
+    { id: "decide", next: { type: "branch", field: "usage", op: ">=", value: 80, ifTrue: "upgrade", ifFalse: "team" } },
     { id: "upgrade", next: { type: "end" } },
-    { id: "team", next: { type: "branch", field: "plan", op: "==", value: "free", then: "upgrade", else: null } },
+    { id: "team", next: { type: "branch", field: "plan", op: "==", value: "free", ifTrue: "upgrade", ifFalse: null } },
   ],
 };
 

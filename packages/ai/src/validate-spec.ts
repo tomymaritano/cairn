@@ -25,8 +25,8 @@ export function validateSpec(spec: FlowSpec): void {
     if (n.type === "step") {
       checkRef(`step "${step.id}".next.to`, n.to);
     } else if (n.type === "branch") {
-      checkRef(`step "${step.id}".next.then`, n.then);
-      checkRef(`step "${step.id}".next.else`, n.else);
+      checkRef(`step "${step.id}".next.ifTrue`, n.ifTrue);
+      checkRef(`step "${step.id}".next.ifFalse`, n.ifFalse);
       if (!fields.has(n.field)) {
         errors.push(
           `step "${step.id}" branches on "${n.field}", which is not declared in initialContext`,
@@ -36,7 +36,7 @@ export function validateSpec(spec: FlowSpec): void {
   }
 
   const hasTerminal = spec.steps.some(
-    (s) => s.next.type === "end" || (s.next.type === "branch" && s.next.else === null),
+    (s) => s.next.type === "end" || (s.next.type === "branch" && s.next.ifFalse === null),
   );
   if (!hasTerminal) {
     errors.push("flow has no terminal path (no step ends the flow)");

@@ -8,7 +8,7 @@ const cannedSpec = {
   initialContext: { usage: 85 },
   steps: [
     { id: "welcome", title: "Welcome", target: "#logo", next: { type: "step", to: "decide" } },
-    { id: "decide", next: { type: "branch", field: "usage", op: ">=", value: 80, then: "upgrade", else: "done" } },
+    { id: "decide", next: { type: "branch", field: "usage", op: ">=", value: 80, ifTrue: "upgrade", ifFalse: "done" } },
     { id: "upgrade", next: { type: "end" } },
     { id: "done", next: { type: "end" } },
   ],

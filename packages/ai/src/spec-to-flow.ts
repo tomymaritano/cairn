@@ -46,7 +46,7 @@ export function specToFlow<C extends object = Record<string, unknown>>(
     return {
       ...base,
       next: (ctx: Readonly<C>) =>
-        compare((ctx as Record<string, unknown>)[n.field], n.op, n.value) ? n.then : n.else,
+        compare((ctx as Record<string, unknown>)[n.field], n.op, n.value) ? n.ifTrue : n.ifFalse,
     };
   });
 

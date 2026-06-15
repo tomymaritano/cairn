@@ -6,7 +6,7 @@ const valid: FlowSpec = {
   id: "f",
   initialContext: { usage: 0 },
   steps: [
-    { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, then: "b", else: null } },
+    { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, ifTrue: "b", ifFalse: null } },
     { id: "b", next: { type: "end" } },
   ],
 };
@@ -28,7 +28,7 @@ describe("validateSpec", () => {
         ...valid,
         initialContext: {},
         steps: [
-          { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, then: "b", else: null } },
+          { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, ifTrue: "b", ifFalse: null } },
           { id: "b", next: { type: "end" } },
         ],
       }),

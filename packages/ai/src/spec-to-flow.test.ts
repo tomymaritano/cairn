@@ -7,7 +7,7 @@ const spec = (usage: number): FlowSpec => ({
   id: "f",
   initialContext: { usage },
   steps: [
-    { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, then: "up", else: "ok" } },
+    { id: "a", next: { type: "branch", field: "usage", op: ">=", value: 80, ifTrue: "up", ifFalse: "ok" } },
     { id: "up", next: { type: "end" } },
     { id: "ok", next: { type: "end" } },
   ],

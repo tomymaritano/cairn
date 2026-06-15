@@ -42,10 +42,10 @@ function buildPrompt(prompt: string, context?: GenerateContext): string {
     "Output a flow with steps; each step has an id and a `next` that is one of:",
     '- { "type": "step", "to": <stepId> }',
     '- { "type": "end" }',
-    '- { "type": "branch", "field", "op", "value", "then", "else" } — a SINGLE comparison',
+    '- { "type": "branch", "field", "op", "value", "ifTrue", "ifFalse" } — a SINGLE comparison',
     "Operators: == != >= <= > <. No AND/OR, no nested logic — one comparison per branch.",
     "Every `field` used in a branch MUST be declared in initialContext with a seed value.",
-    "Every `to`/`then`/`else` must reference an existing step id (or null to end).",
+    "Every `to`/`ifTrue`/`ifFalse` must reference an existing step id (`ifFalse` may be null to end).",
     "At least one step must end the flow.",
     "Steps that point at UI should set `target` (a CSS selector), `title`, and `body`.",
   ];

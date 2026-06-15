@@ -15,8 +15,8 @@ export const StepNextSchema = z.discriminatedUnion("type", [
     field: z.string().describe("a key in initialContext"),
     op: z.enum(OPERATORS),
     value: ScalarValue,
-    then: z.string().describe("step id to enter when the comparison is true"),
-    else: z.string().nullable().describe("step id when false, or null to end the flow"),
+    ifTrue: z.string().describe("step id to enter when the comparison is true"),
+    ifFalse: z.string().nullable().describe("step id when false, or null to end the flow"),
   }),
 ]);
 
