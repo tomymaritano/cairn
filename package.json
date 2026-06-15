@@ -20,5 +20,13 @@
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^19.2.0",
+      "react-dom": "^19.2.0",
+      "@types/react": "^19.2.0",
+      "@types/react-dom": "^19.2.0"
+    }
   }
 }

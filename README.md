@@ -78,6 +78,32 @@ function Tour() {
 }
 ```
 
+## Headless UI, if you want it
+
+`@cairn/ui` gives you an accessible popover (positioned with Floating UI:
+flip, shift, follows the target through scroll) and a spotlight overlay. Cairn
+owns positioning and a11y; **you own the content and styling**.
+
+```tsx
+import { CairnSpotlight, CairnPopover } from "@cairn/ui";
+
+<FlowProvider engine={engine}>
+  <App />
+  <CairnSpotlight padding={6} />
+  <CairnPopover className="my-card">
+    {(step) => (
+      <>
+        <h3>{String(step.meta?.title)}</h3>
+        <Controls />
+      </>
+    )}
+  </CairnPopover>
+</FlowProvider>;
+```
+
+Prefer your own components? Skip `@cairn/ui` entirely and render from
+`useFlow()` — the engine doesn't care.
+
 ## Analytics, for free
 
 Every transition is a typed event. Pipe the firehose to PostHog, Segment, anything:
@@ -120,13 +146,14 @@ Bring your own store by implementing three methods — `load`, `save`, `remove`.
 |---------|------------|
 | [`@cairn/core`](./packages/core) | Framework-agnostic state-machine engine. Zero dependencies. |
 | [`@cairn/react`](./packages/react) | React bindings: `<FlowProvider>`, `useFlow()`, `useCurrentStep()`. |
+| [`@cairn/ui`](./packages/ui) | Headless, accessible primitives: `<CairnSpotlight>`, `<CairnPopover>`. |
 
 ## Roadmap
 
 - [x] Framework-agnostic engine (branching, guards, history, events)
 - [x] React bindings (`useSyncExternalStore`, concurrent-safe)
 - [x] Persistence adapters (resume a flow across sessions)
-- [ ] Headless UI primitives (`@cairn/ui`) — accessible popovers, spotlights
+- [x] Headless UI primitives (`@cairn/ui`) — accessible popover + spotlight
 - [ ] Vue & Svelte adapters
 - [ ] **Visual flow builder**
 
