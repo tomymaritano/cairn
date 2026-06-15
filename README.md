@@ -1,4 +1,6 @@
 <div align="center">
+  
+  <img width="800" height="539" alt="CleanShot 2026-06-15 at 09 06 16" src="https://github.com/user-attachments/assets/c1455c6e-941c-4f9e-8aab-5ca3e93a75e5" />
 
 # Cairn
 
