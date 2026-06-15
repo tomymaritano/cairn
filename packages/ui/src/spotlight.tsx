@@ -2,7 +2,7 @@
 
 import { createPortal } from "react-dom";
 import { useFlow } from "cairn-react";
-import { useElementRect, useTargetElement } from "./use-target.js";
+import { useElementRect, usePrefersReducedMotion, useTargetElement } from "./use-target.js";
 import type { CSSProperties } from "react";
 
 export interface CairnSpotlightProps {
@@ -36,6 +36,7 @@ export function CairnSpotlight({
   const selector = state.currentStep?.meta?.["target"] as string | undefined;
   const target = useTargetElement(selector);
   const rect = useElementRect(target);
+  const reducedMotion = usePrefersReducedMotion();
 
   if (!rect || typeof document === "undefined") return null;
 
@@ -53,7 +54,7 @@ export function CairnSpotlight({
         borderRadius: radius,
         boxShadow: `0 0 0 9999px ${overlayColor}`,
         pointerEvents: "none",
-        transition: "all 0.2s ease",
+        transition: reducedMotion ? "none" : "all 0.2s ease",
         zIndex: 9998,
         ...style,
       }}

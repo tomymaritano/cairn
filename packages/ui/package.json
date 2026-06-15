@@ -43,7 +43,8 @@
     "@types/react-dom": "^19.2.0",
     "jsdom": "^25.0.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "axe-core": "^4.10.0"
   },
   "keywords": [
     "react",
