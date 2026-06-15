@@ -1,5 +1,14 @@
 # cairn-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- b9d01cd: Accessibility: `CairnSpotlight` now respects `prefers-reduced-motion` (drops its
+  transition), and a new `usePrefersReducedMotion()` hook is exported. Adds an
+  automated axe-core test asserting the active tour (popover + spotlight) has no
+  accessibility violations.
+
 ## 0.2.0
 
 ### Minor Changes
