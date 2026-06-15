@@ -8,7 +8,7 @@
 
 Cairn /kɛrn/ — _the stacked stones that mark a trail. You place the markers; your users find the way._
 
-[**Docs & live demo →**](https://react-cairn.vercel.app) · [![npm](https://img.shields.io/npm/v/react-cairn?color=black&label=react-cairn)](https://www.npmjs.com/package/react-cairn) · [![license](https://img.shields.io/badge/license-MIT-black)](./LICENSE)
+[**Docs & live demo →**](https://react-cairn.vercel.app) · [![npm](https://img.shields.io/npm/v/cairn-react?color=black&label=cairn-react)](https://www.npmjs.com/package/cairn-react) · [![license](https://img.shields.io/badge/license-MIT-black)](./LICENSE)
 
 </div>
 
@@ -32,7 +32,7 @@ The engine is **framework-agnostic**; React is the first official binding (Vue a
 ## Install
 
 ```bash
-npm i react-cairn        # React bindings (re-exports the core)
+npm i cairn-react        # React bindings (re-exports the core)
 # or just the engine, for any framework / a custom renderer:
 npm i cairn-core
 ```
@@ -40,7 +40,7 @@ npm i cairn-core
 ## Quickstart
 
 ```tsx
-import { FlowProvider, defineFlow, useFlow } from "react-cairn";
+import { FlowProvider, defineFlow, useFlow } from "cairn-react";
 
 // 1. Define a flow. `next` can branch on live context.
 const onboarding = defineFlow<{ hasTeam: boolean }>({
@@ -147,7 +147,7 @@ Bring your own store by implementing three methods — `load`, `save`, `remove`.
 | Package | What it is |
 |---------|------------|
 | [`cairn-core`](./packages/core) | Framework-agnostic state-machine engine. Zero dependencies. |
-| [`react-cairn`](./packages/react) | React bindings: `<FlowProvider>`, `useFlow()`, `useCurrentStep()`. |
+| [`cairn-react`](./packages/react) | React bindings: `<FlowProvider>`, `useFlow()`, `useCurrentStep()`. |
 | [`cairn-ui`](./packages/ui) | Headless, accessible primitives: `<CairnSpotlight>`, `<CairnPopover>`. |
 
 ## Roadmap

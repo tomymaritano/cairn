@@ -1,4 +1,4 @@
-# react-cairn
+# cairn-react
 
 React bindings for [Cairn](https://github.com/tomymaritano/cairn) — the
 workflow engine for onboarding, product adoption, and user guidance. Built on
@@ -7,11 +7,11 @@ workflow engine for onboarding, product adoption, and user guidance. Built on
 the only package you need.
 
 ```bash
-npm i react-cairn
+npm i cairn-react
 ```
 
 ```tsx
-import { FlowProvider, defineFlow, useFlow } from "react-cairn";
+import { FlowProvider, defineFlow, useFlow } from "cairn-react";
 
 const onboarding = defineFlow({
   id: "onboarding",

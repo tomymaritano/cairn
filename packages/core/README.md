@@ -30,7 +30,7 @@ Features: branching (`next` resolves on live context), `canEnter` guards,
 history/back-navigation, a typed event stream for analytics, and
 persistence/resume adapters.
 
-Using React? Install [`react-cairn`](https://www.npmjs.com/package/react-cairn)
+Using React? Install [`cairn-react`](https://www.npmjs.com/package/cairn-react)
 instead — it re-exports this package.
 
 📖 **[Full documentation & live demo →](https://react-cairn.vercel.app)**

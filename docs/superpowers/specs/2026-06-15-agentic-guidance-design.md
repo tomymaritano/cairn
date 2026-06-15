@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-15
 **Status:** Approved (design)
-**Packages affected:** `cairn-core` (0.2.0), `react-cairn` (0.2.0), `apps/docs-site` (demo)
+**Packages affected:** `cairn-core` (0.2.0), `cairn-react` (0.2.0), `apps/docs-site` (demo)
 
 ## Goal
 
@@ -94,7 +94,7 @@ The async machinery is fully isolated behind "does this step have `run`?".
 Flows without `run` keep the current synchronous behaviour and the existing 16
 core tests must stay green unchanged.
 
-## 2. `react-cairn` v0.2
+## 2. `cairn-react` v0.2
 
 - `useFlow()` `state` now surfaces `running` and `error`.
 - `FlowControls` gains `retry()`.
@@ -151,7 +151,7 @@ A self-contained widget embedded in the docs (sibling to the existing
 - event order: `step:enter` → `step:run:start` → `step:run:success` →
   (`step:exit` → `step:enter`)…
 
-**react (`react-cairn`):**
+**react (`cairn-react`):**
 
 - `state.running` toggles around a `run` step; `state.error` surfaces on
   failure; `retry()` re-runs.
@@ -162,7 +162,7 @@ returns a valid step id for representative contexts.
 ## 6. Versioning / release
 
 - `cairn-core`: **minor → 0.2.0** (additive, backward-compatible).
-- `react-cairn`: **minor → 0.2.0** (surfaces `running`/`error`/`retry`; depends
+- `cairn-react`: **minor → 0.2.0** (surfaces `running`/`error`/`retry`; depends
   on `cairn-core@0.2.0`).
 - `cairn-ui`: patch/minor only if the popover styling hook is added.
 - One changeset describes the feature. Publish via CI (automation token) or
@@ -171,7 +171,7 @@ returns a valid step id for representative contexts.
 ## Build sequence
 
 1. `cairn-core` `run` semantics + tests.
-2. `react-cairn` surfaces `running` / `error` / `retry` + tests.
+2. `cairn-react` surfaces `running` / `error` / `retry` + tests.
 3. Multi-route agentic demo with `SimAgent` in `apps/docs-site`.
 4. `LLMAgent` adapter — interface ready now, implementation later (own spec).
 

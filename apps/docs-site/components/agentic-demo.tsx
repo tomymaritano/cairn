@@ -6,7 +6,7 @@ import {
   FlowProvider,
   defineFlow,
   useFlow,
-} from "react-cairn";
+} from "cairn-react";
 import { CairnPopover } from "cairn-ui";
 
 // ---------------------------------------------------------------------------

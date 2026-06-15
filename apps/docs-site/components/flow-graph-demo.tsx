@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { FlowEngine, FlowProvider, defineFlow, useFlow } from "react-cairn";
+import { FlowEngine, FlowProvider, defineFlow, useFlow } from "cairn-react";
 import { FlowGraph } from "cairn-devtools";
 
 interface Ctx {

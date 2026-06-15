@@ -1,7 +1,7 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useFlow } from "react-cairn";
+import { useFlow } from "cairn-react";
 import { useElementRect, useTargetElement } from "./use-target.js";
 import type { CSSProperties } from "react";
 
