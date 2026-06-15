@@ -1,15 +1,15 @@
-# cairn-ai
+# cairn-gen
 
 Generate [Cairn](https://github.com/tomymaritano/cairn) flows from a
 natural-language prompt. Returns a validated declarative spec, ready-to-paste
 `defineFlow(...)` code, and a runnable flow.
 
 ```bash
-npm i cairn-ai
+npm i cairn-gen
 ```
 
 ```ts
-import { generateFlow } from "cairn-ai";
+import { generateFlow } from "cairn-gen";
 
 const { spec, code, flow } = await generateFlow(
   "onboard a new user to the billing page; if usage is over 80%, push the upgrade",

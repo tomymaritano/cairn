@@ -1,8 +1,8 @@
-# cairn-ai — `generateFlow(prompt)` (v1)
+# cairn-gen — `generateFlow(prompt)` (v1)
 
 **Date:** 2026-06-15
 **Status:** Approved (design)
-**New package:** `cairn-ai` (0.1.0)
+**New package:** `cairn-gen` (0.1.0)
 
 ## Goal
 
@@ -25,11 +25,11 @@ drag-to-edit visual canvas is a separate effort.
 - **Safety:** the LLM produces **data** (the spec) only — never executable code.
   `specToCode` emits a string to paste; `specToFlow` builds closures *we*
   construct from the declarative comparisons. No `eval`, ever.
-- **Name:** `cairn-ai`.
+- **Name:** `cairn-gen`.
 
 ## Package
 
-`cairn-ai` (unscoped, public, 0.1.0). Node/isomorphic.
+`cairn-gen` (unscoped, public, 0.1.0). Node/isomorphic.
 
 - **dependencies:** `ai` (^6), `zod`
 - **peerDependencies:** `cairn-core` (types + `FlowDefinition`)
