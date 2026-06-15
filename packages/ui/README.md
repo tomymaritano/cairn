@@ -20,6 +20,26 @@ tracks the target through scroll/resize.
 <CairnSpotlight padding={6} radius={8} overlayColor="rgba(0,0,0,0.5)" />
 ```
 
+### `<CairnProgress>`
+
+A progress indicator for the active flow — "step N / total" plus a dot per step.
+Reads `stepIndex` / `totalSteps`; renders nothing when idle. Style via
+`data-cairn-progress*` / `--cairn-dot*`.
+
+```tsx
+<CairnProgress showCount showDots />
+```
+
+### `<CairnBeacon>`
+
+A pulsing hotspot anchored to the current step's target — a click-to-continue
+affordance. A real `<button>` with an accessible name; clicking advances the
+flow (or runs `onActivate`). Pulse is disabled under `prefers-reduced-motion`.
+
+```tsx
+<CairnBeacon color="#4f46e5" size={14} />
+```
+
 ### `<CairnPopover>`
 
 An accessible dialog anchored to the current step's target, positioned with
