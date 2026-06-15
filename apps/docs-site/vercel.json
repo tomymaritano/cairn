@@ -1,0 +1,5 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "pnpm --filter cairn-core --filter react-cairn --filter cairn-ui build && pnpm --filter @cairn/docs build"
+}
