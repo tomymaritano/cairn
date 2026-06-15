@@ -1,0 +1,100 @@
+---
+title: Persistence & Resume
+description: Resume flows across reloads and sessions, and never re-show a completed onboarding.
+---
+
+# Persistence & Resume
+
+Onboarding spans sessions. A user might start, get distracted, and come back
+tomorrow — the flow should pick up where they left off, and a flow they've
+already finished should never reappear. Cairn handles both with
+**persistence adapters**.
+
+## Enable persistence
+
+Pass a `persistence` config when you build the engine:
+
+```ts
+import { FlowEngine, createWebStorageAdapter } from "@cairn/core";
+
+const engine = new FlowEngine(onboarding, {
+  persistence: {
+    adapter: createWebStorageAdapter(), // localStorage by default
+    namespace: currentUser.id,          // optional: persist per-user
+  },
+});
+
+engine.start(); // resumes saved progress, or starts fresh if there is none
+```
+
+With React, pass it through the provider:
+
+```tsx
+<FlowProvider
+  flow={onboarding}
+  options={{ persistence: { adapter: createWebStorageAdapter() } }}
+>
+  {children}
+</FlowProvider>
+```
+
+## How resume works
+
+On `start()`, the engine reads any saved snapshot and decides:
+
+- **In-progress flow** → resumes at the saved step, restores context and
+  history, and fires a `flow:resume` event (not `flow:start`).
+- **Finished flow** (`completed` / `skipped` / `dismissed`) → stays finished
+  and does **not** re-show. Set `respectCompleted: false` to allow replays.
+- **No snapshot, or a stale one** (e.g. the saved step no longer exists
+  because you changed the flow) → starts fresh.
+
+Progress is saved automatically on every transition.
+
+## Replaying a flow
+
+Call `reset()` to clear stored progress and return to `idle`. The next
+`start()` runs from the top — handy for a "Replay tour" button.
+
+```ts
+engine.reset();
+engine.start();
+```
+
+## Built-in adapters
+
+| Adapter                       | Use for                                   |
+| ----------------------------- | ----------------------------------------- |
+| `createWebStorageAdapter()`   | `localStorage` / `sessionStorage` (default `localStorage`). SSR- and private-mode-safe: degrades to a no-op if storage is unavailable. |
+| `createMemoryAdapter()`       | Tests and SSR fallback.                   |
+
+`createWebStorageAdapter` takes an optional getter so you can target
+`sessionStorage`:
+
+```ts
+createWebStorageAdapter(() => window.sessionStorage);
+```
+
+## Bring your own store
+
+An adapter is just three synchronous methods. Back it with cookies, a sync
+in-memory cache hydrated from your API, anything:
+
+```ts
+import type { PersistenceAdapter } from "@cairn/core";
+
+const myAdapter: PersistenceAdapter = {
+  load: (key) => myStore.get(key) ?? null,
+  save: (key, value) => myStore.set(key, value),
+  remove: (key) => myStore.delete(key),
+};
+```
+
+Cairn handles serialization — adapters only ever see string values, keyed by
+`cairn:[namespace:]flowId`.
+
+<Callout>
+Adapters are **synchronous** today, which keeps the engine simple and
+`start()` non-async. Async/remote adapters (load progress from your backend)
+are on the roadmap via a separate `hydrate()` path.
+</Callout>

@@ -1,0 +1,79 @@
+---
+title: Branching & Guards
+description: Build non-linear flows that adapt to who the user is and what they've done.
+---
+
+# Branching & Guards
+
+Branching is what separates Cairn from a linear tour. There are two tools:
+**dynamic `next`** and **`canEnter` guards**.
+
+## Dynamic `next`
+
+Make `next` a function. It receives the live context and returns the id of
+the next step — or `null` to end the flow.
+
+```ts
+const flow = defineFlow<{ plan: "free" | "team" }>({
+  id: "onboarding",
+  initialContext: { plan: "free" },
+  steps: [
+    { id: "welcome", next: "pickPlan" },
+    {
+      id: "pickPlan",
+      next: (ctx) => (ctx.plan === "team" ? "inviteTeam" : "done"),
+    },
+    { id: "inviteTeam", next: "done" },
+    { id: "done", next: null },
+  ],
+});
+```
+
+The decision happens **at the moment `next()` is called**, against the
+current context — so updating context mid-flow changes the path:
+
+```ts
+engine.setContext({ plan: "team" });
+engine.next(); // now routes to "inviteTeam"
+```
+
+## Guards (`canEnter`)
+
+A guard decides whether a step is allowed *right now*. If `canEnter` returns
+`false`, the engine **skips** the step and advances to its `next` — without
+ever showing it.
+
+```ts
+{
+  id: "inviteTeam",
+  canEnter: (ctx) => ctx.plan === "team", // skipped entirely for free users
+  next: "done",
+}
+```
+
+Use **dynamic `next`** to choose *where to go*, and **guards** to declare
+*when a step is even eligible*. Guards compose well when several steps each
+have their own precondition — you don't have to encode every branch in one
+`next` function.
+
+### Loop protection
+
+If guards chain in a way that would loop forever (A skips to B, B skips back
+to A), the engine throws a clear error rather than hanging:
+
+```
+Cairn: guard loop detected entering "stepA".
+```
+
+## Multi-page flows
+
+Because the engine is decoupled from the DOM, a flow survives navigation. A
+step can point at an element on a different route — your renderer simply waits
+for the target to mount. Combined with [persistence](/docs/persistence), a
+flow can span several pages and even browser sessions.
+
+## History & back-navigation
+
+The engine records every step it enters in `state.history`. `back()` pops the
+current step and re-enters the previous one. Note that `back()` walks the
+*actual path taken*, so it respects whatever branch the user went down.

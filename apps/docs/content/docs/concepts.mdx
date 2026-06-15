@@ -1,0 +1,109 @@
+---
+title: Core Concepts
+description: Flows, steps, context, and the state machine that drives Cairn.
+---
+
+# Core Concepts
+
+## The flow
+
+A **flow** is a named state machine: an `id`, a list of `steps`, and an
+optional `initialContext`. You create one with `defineFlow` (a typed identity
+helper) and run it with a `FlowEngine`.
+
+```ts
+const flow = defineFlow<MyContext>({
+  id: "onboarding",
+  initialContext: { plan: "free" },
+  steps: [/* … */],
+  initialStep: "welcome", // optional; defaults to the first step
+});
+```
+
+## Steps
+
+A **step** is one waypoint. The only required field is `id`. Everything else
+shapes how the engine moves and how your UI renders.
+
+```ts
+interface StepDefinition<C> {
+  id: string;
+  next?: string | null | ((ctx: C) => string | null);
+  canEnter?: (ctx: C) => boolean;
+  meta?: Record<string, unknown>;
+}
+```
+
+- **`next`** — where to go when `engine.next()` is called. A string targets a
+  step by id; `null` (or omitting it) ends the flow; a function
+  [branches](/docs/branching) on context.
+- **`canEnter`** — a [guard](/docs/branching#guards). If it returns `false`,
+  the step is skipped and the engine advances to its `next`.
+- **`meta`** — an open bag the **renderer** reads (target selector, title,
+  body, placement…). The core never inspects it, which is what keeps the
+  engine framework-agnostic.
+
+## Context
+
+**Context** is your own data, carried by the flow as it runs. Branching
+decisions and guards read from it; your app updates it with `setContext`:
+
+```ts
+engine.setContext({ hasTeam: true });
+```
+
+`setContext` merges a patch (it doesn't replace the whole object) and emits a
+`context:update` event so subscribers can react.
+
+## The state machine
+
+At any moment a flow has a **status**:
+
+| Status      | Meaning                                        |
+| ----------- | ---------------------------------------------- |
+| `idle`      | Not started yet                                |
+| `active`    | Running; a step is on screen                   |
+| `completed` | Reached the end (a `next` resolved to `null`)  |
+| `skipped`   | The user dismissed it via `skip()`             |
+| `dismissed` | Closed via `dismiss()`                         |
+
+The engine exposes an immutable **snapshot** of its state via `getState()`:
+
+```ts
+interface FlowState<C> {
+  flowId: string;
+  status: FlowStatus;
+  currentStepId: string | null;
+  currentStep: StepDefinition<C> | null;
+  context: C;
+  history: string[]; // entered step ids, for back-navigation
+  stepIndex: number; // position of the current step in the list
+  totalSteps: number;
+}
+```
+
+## Transitions
+
+The engine is driven by a small set of methods:
+
+| Method            | Effect                                                 |
+| ----------------- | ------------------------------------------------------ |
+| `start()`         | Begin the flow (or [resume](/docs/persistence) it)     |
+| `next()`          | Resolve the current step's `next` and move             |
+| `back()`          | Return to the previous step in history                 |
+| `goTo(id)`        | Jump to a specific step                                |
+| `setContext(p)`   | Merge a patch into context                             |
+| `skip()`          | End the flow as `skipped`                              |
+| `dismiss()`       | End the flow as `dismissed`                            |
+| `reset()`         | Clear progress and return to `idle`                    |
+
+Every transition produces a new snapshot and fires
+[events](/docs/analytics).
+
+## Why the engine is headless
+
+The core never imports React or touches the DOM. It's a pure state machine
+you can unit-test in milliseconds and reuse across frameworks. Renderers like
+`@cairn/react` subscribe to it and draw UI. This is the same split as
+XState/`@xstate/react` or TanStack Core/React — and it's why Cairn can offer
+multi-page flows and branching that DOM-coupled tour libraries can't.

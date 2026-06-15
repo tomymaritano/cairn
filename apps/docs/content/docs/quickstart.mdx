@@ -1,0 +1,105 @@
+---
+title: Quickstart
+description: Install Cairn, define a flow, and render your first guided onboarding in a few minutes.
+---
+
+# Quickstart
+
+## Install
+
+```bash
+npm i @cairn/react
+# the React package re-exports the core, so this is all you need
+```
+
+For a non-React app or a custom renderer, install just the engine:
+
+```bash
+npm i @cairn/core
+```
+
+## 1. Define a flow
+
+A flow is a list of **steps**. Each step knows where to go `next` — and
+`next` can be a function that branches on live context.
+
+```tsx
+import { defineFlow } from "@cairn/react";
+
+const onboarding = defineFlow<{ hasTeam: boolean }>({
+  id: "onboarding",
+  initialContext: { hasTeam: false },
+  steps: [
+    {
+      id: "welcome",
+      next: "profile",
+      meta: { target: "#logo", title: "Welcome 👋", body: "Let's get you set up." },
+    },
+    {
+      id: "profile",
+      // Branch: team users go to "invite", everyone else finishes.
+      next: (ctx) => (ctx.hasTeam ? "invite" : null),
+      meta: { target: "#profile", title: "Your profile" },
+    },
+    {
+      id: "invite",
+      next: null, // null ends the flow
+      meta: { target: "#invite", title: "Invite your team" },
+    },
+  ],
+});
+```
+
+## 2. Wrap your app
+
+```tsx
+import { FlowProvider } from "@cairn/react";
+
+function App() {
+  return (
+    <FlowProvider flow={onboarding} options={{ autoStart: true }}>
+      <YourApp />
+      <Tour />
+    </FlowProvider>
+  );
+}
+```
+
+## 3. Render the current step
+
+Cairn owns the logic; **you own the UI**. The `meta` bag carries whatever
+your renderer needs (a target selector, a title, a body…).
+
+```tsx
+import { useFlow } from "@cairn/react";
+
+function Tour() {
+  const { state, next, back, skip } = useFlow<{ hasTeam: boolean }>();
+  const step = state.currentStep;
+  if (!step) return null;
+
+  return (
+    <div data-step={step.id}>
+      <h3>{String(step.meta?.title ?? step.id)}</h3>
+      <small>
+        Step {state.stepIndex + 1} / {state.totalSteps}
+      </small>
+      <button onClick={back} disabled={state.history.length < 2}>Back</button>
+      <button onClick={next}>Next</button>
+      <button onClick={skip}>Skip</button>
+    </div>
+  );
+}
+```
+
+That's a complete, branching, multi-step onboarding. Next, learn the
+[Core Concepts](/docs/concepts) behind it.
+
+## Try the playground
+
+The repo ships a live demo with a spotlight, branching toggle, and an
+event-stream panel:
+
+```bash
+pnpm play   # → http://localhost:5173
+```

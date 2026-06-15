@@ -1,0 +1,101 @@
+---
+title: "@cairn/core"
+description: API reference for the framework-agnostic engine — FlowEngine, defineFlow, and persistence.
+---
+
+# @cairn/core
+
+The framework-agnostic state-machine engine. Zero dependencies. Use it
+directly for non-React apps, custom renderers, or server-side logic.
+
+## `defineFlow(definition)`
+
+A typed identity helper. It returns the definition unchanged but pins the
+context type `C`, so `next` and `canEnter` callbacks get full inference.
+
+```ts
+const flow = defineFlow<{ hasTeam: boolean }>({
+  id: "onboarding",
+  initialContext: { hasTeam: false },
+  steps: [/* … */],
+});
+```
+
+## `new FlowEngine(definition, options?)`
+
+Creates and owns a running flow.
+
+```ts
+const engine = new FlowEngine(flow, {
+  autoStart: false,
+  persistence: { adapter: createWebStorageAdapter() },
+});
+```
+
+### `EngineOptions`
+
+| Option        | Type                | Default | Description                                  |
+| ------------- | ------------------- | ------- | -------------------------------------------- |
+| `autoStart`   | `boolean`           | `false` | Start the flow immediately on construction.  |
+| `persistence` | `PersistenceConfig` | —       | Persist & resume across reloads.             |
+
+### Methods
+
+| Method                 | Description                                              |
+| ---------------------- | ------------------------------------------------------- |
+| `getState()`           | Current immutable `FlowState` snapshot.                 |
+| `start()`              | Begin (or resume) the flow.                             |
+| `next()`               | Resolve the current step's `next` and transition.       |
+| `back()`               | Re-enter the previous step in history.                  |
+| `goTo(stepId)`         | Jump to a step by id.                                   |
+| `setContext(patch)`    | Merge a patch into context; emits `context:update`.     |
+| `skip()` / `dismiss()` | End the flow as `skipped` / `dismissed`.                |
+| `reset()`              | Clear persisted progress; return to `idle`.             |
+| `subscribe(fn)`        | State-snapshot subscription. Returns an unsubscribe fn. |
+| `on(type, fn)`         | Subscribe to a single event. Returns an unsubscribe fn. |
+| `onAny(fn)`            | Subscribe to every event. Returns an unsubscribe fn.    |
+| `destroy()`            | Remove all listeners.                                   |
+
+`subscribe` is shaped for React's `useSyncExternalStore`; the snapshot
+reference is stable between transitions, so it won't cause spurious renders.
+
+## Persistence API
+
+```ts
+import {
+  createWebStorageAdapter,
+  createMemoryAdapter,
+  clearPersisted,
+  persistenceKey,
+  type PersistenceAdapter,
+  type PersistenceConfig,
+  type PersistedFlow,
+} from "@cairn/core";
+```
+
+### `PersistenceConfig`
+
+| Field              | Type                 | Default        | Description                                              |
+| ------------------ | -------------------- | -------------- | -------------------------------------------------------- |
+| `adapter`          | `PersistenceAdapter` | —              | The key-value store.                                     |
+| `key`              | `string`             | —              | Override the storage key entirely.                       |
+| `namespace`        | `string`             | —              | Scope the key (e.g. a user id) → `cairn:ns:flowId`.      |
+| `respectCompleted` | `boolean`            | `true`         | Don't re-show a finished flow on `start()`.              |
+
+### `PersistenceAdapter`
+
+```ts
+interface PersistenceAdapter {
+  load(key: string): string | null;
+  save(key: string, value: string): void;
+  remove(key: string): void;
+}
+```
+
+See [Persistence & Resume](/docs/persistence) for the full guide.
+
+## Types
+
+All public types are exported: `FlowDefinition`, `StepDefinition`,
+`FlowState`, `FlowStatus`, `StepTarget`, `StepGuard`, `FlowContext`,
+`CairnEvent`, `CairnEventType`, `CairnEventMap`.

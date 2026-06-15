@@ -1,0 +1,48 @@
+---
+title: Introduction
+description: Cairn is a state-machine-driven workflow engine for onboarding, product adoption, and user guidance — not another tooltip library.
+---
+
+# Cairn
+
+**The workflow engine for onboarding, product adoption, and user guidance.**
+
+> Cairn /kɛrn/ — the stacked stones that mark a trail. You place the markers; your users find the way.
+
+Cairn is **not** another tooltip or product-tour library. It's a
+**state-machine-driven workflow engine** for guiding users through your
+product: multi-page flows, branching paths, live context, and a first-class
+event stream for analytics.
+
+The engine is **framework-agnostic**. React is the first official binding;
+Vue and Svelte adapters, plus a visual flow builder, are on the roadmap.
+
+## Why not just a tour library?
+
+Tooltip libraries model guidance as a **linear list of steps**. Real
+onboarding isn't linear — it branches on who the user is, what they've done,
+and where they are in your app. Cairn models guidance as a **state machine**.
+
+|                       | Tour libraries (Joyride, Shepherd, Intro.js) | **Cairn**                          |
+| --------------------- | -------------------------------------------- | ---------------------------------- |
+| Mental model          | A linear list of tooltips                    | A **state machine** of waypoints   |
+| Branching             | ✗                                            | ✓ context-driven `next()`          |
+| Multi-page flows      | painful                                      | ✓ engine survives navigation       |
+| Resume across reloads | ✗                                            | ✓ persistence adapters             |
+| Analytics             | bolt-on                                      | ✓ typed event stream, built in     |
+| Renderer              | coupled to the DOM                           | **decoupled** core + adapters      |
+| TypeScript            | partial                                      | **TypeScript-first**, fully typed  |
+
+## Architecture in one sentence
+
+Cairn separates the **engine** (a headless state machine in `@cairn/core`)
+from the **renderer** (`@cairn/react` and future adapters). The engine owns
+the logic and never touches the DOM; the renderer observes the engine and
+draws whatever UI you want.
+
+## Next steps
+
+- [Quickstart](/docs/quickstart) — running in five minutes
+- [Core Concepts](/docs/concepts) — flows, steps, and the state machine
+- [Branching](/docs/branching) — context-driven paths and guards
+- [Persistence](/docs/persistence) — resume flows across sessions

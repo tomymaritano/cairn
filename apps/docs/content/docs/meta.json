@@ -1,0 +1,14 @@
+{
+  "title": "Cairn",
+  "pages": [
+    "index",
+    "quickstart",
+    "concepts",
+    "branching",
+    "persistence",
+    "analytics",
+    "---API Reference---",
+    "react",
+    "core"
+  ]
+}

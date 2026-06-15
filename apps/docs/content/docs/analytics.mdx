@@ -1,0 +1,77 @@
+---
+title: Events & Analytics
+description: Every transition is a typed event. Pipe the stream to PostHog, Segment, or anything.
+---
+
+# Events & Analytics
+
+Analytics isn't bolted on in Cairn — it's the same event stream the engine
+uses internally. Every meaningful transition emits a **typed event**, and you
+subscribe to one, some, or all of them.
+
+## The event stream
+
+| Event             | Fired when                                  |
+| ----------------- | ------------------------------------------- |
+| `flow:start`      | A flow begins fresh                         |
+| `flow:resume`     | A persisted flow resumes mid-progress       |
+| `step:enter`      | A step becomes active                       |
+| `step:exit`       | A step is left                              |
+| `flow:complete`   | The flow reaches its end                    |
+| `flow:skip`       | The user skips the flow                     |
+| `flow:dismiss`    | The flow is dismissed                       |
+| `context:update`  | Context is patched via `setContext`         |
+
+Every payload includes the `flowId` and the current `state` snapshot;
+step events also include the `step`.
+
+## Subscribe to everything (`onAny`)
+
+This is how analytics adapters capture the whole funnel in one place:
+
+```ts
+engine.onAny((event) => {
+  analytics.track(`cairn.${event.type}`, {
+    flowId: event.flowId,
+    step: event.state.currentStepId,
+    stepIndex: event.state.stepIndex,
+  });
+});
+```
+
+`event.type` is a discriminated union, so TypeScript narrows the payload:
+
+```ts
+engine.onAny((event) => {
+  if (event.type === "step:enter") {
+    // event.step is typed here
+    console.log("entered", event.step.id);
+  }
+});
+```
+
+## Subscribe to one event (`on`)
+
+For targeted side effects:
+
+```ts
+const off = engine.on("flow:complete", ({ state }) => {
+  confetti();
+  markOnboardingDone(state.flowId);
+});
+
+// later
+off(); // unsubscribe
+```
+
+## Measuring funnels
+
+Because `step:enter` fires for every step the user actually reaches (skipped
+guarded steps don't fire), the event stream *is* your onboarding funnel:
+
+- **Drop-off** — steps with many `step:enter` but few advancing to the next
+- **Completion rate** — `flow:complete` vs `flow:start` + `flow:resume`
+- **Skip rate** — `flow:skip` / `flow:dismiss` per flow
+
+No extra instrumentation: wire `onAny` to your analytics provider once and
+every flow is measured.

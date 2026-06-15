@@ -1,0 +1,85 @@
+---
+title: "@cairn/react"
+description: API reference for the React bindings — FlowProvider, useFlow, and useCurrentStep.
+---
+
+# @cairn/react
+
+React bindings for Cairn, built on `useSyncExternalStore` so flow state stays
+correct under React 18 concurrent rendering. The package re-exports the entire
+`@cairn/core` surface, so you only need to install one package.
+
+## `<FlowProvider>`
+
+Provides a single flow engine to the React tree.
+
+```tsx
+<FlowProvider flow={onboarding} options={{ autoStart: true }}>
+  {children}
+</FlowProvider>
+```
+
+| Prop       | Type                       | Description                                                        |
+| ---------- | -------------------------- | ------------------------------------------------------------------ |
+| `flow`     | `FlowDefinition<C>`        | A flow definition — the provider builds and owns the engine.       |
+| `engine`   | `FlowEngine<C>`            | Or pass a pre-built engine you manage yourself.                    |
+| `options`  | `EngineOptions`            | Forwarded to the engine (`autoStart`, `persistence`).              |
+| `children` | `ReactNode`                | Your app.                                                          |
+
+Pass **either** `flow` or `engine`. When the provider owns the engine (`flow`),
+it's destroyed automatically on unmount. Pass `engine` when you need to tap the
+raw event stream (e.g. wire `onAny` to analytics) alongside the React tree.
+
+## `useFlow()`
+
+Returns the live flow state plus stable control callbacks.
+
+```tsx
+const {
+  state,       // FlowState<C> — re-renders on every transition
+  start,
+  next,
+  back,
+  goTo,
+  skip,
+  dismiss,
+  setContext,
+  reset,
+} = useFlow<MyContext>();
+```
+
+`state` is the same immutable snapshot described in
+[Core Concepts](/docs/concepts#the-state-machine). The control callbacks are
+memoized, so they're safe to pass to memoized children or effect deps.
+
+```tsx
+function Tour() {
+  const { state, next, setContext } = useFlow<{ hasTeam: boolean }>();
+  const step = state.currentStep;
+  if (!step) return null;
+  return (
+    <Popover targetSelector={step.meta?.target as string}>
+      <h3>{String(step.meta?.title)}</h3>
+      <button onClick={next}>Next</button>
+    </Popover>
+  );
+}
+```
+
+## `useCurrentStep()`
+
+A convenience hook that returns just the active step (or `null`). Handy when a
+component only cares about *what* to render, not the controls.
+
+```tsx
+const step = useCurrentStep<MyContext>();
+if (!step) return null;
+return <Tooltip title={String(step.meta?.title)} />;
+```
+
+## Errors
+
+- Calling `useFlow`/`useCurrentStep` outside a `<FlowProvider>` throws:
+  `Cairn: hooks must be used inside a <FlowProvider>.`
+- Rendering `<FlowProvider>` with neither `flow` nor `engine` throws:
+  `Cairn: <FlowProvider> needs either flow or engine.`
