@@ -6,7 +6,7 @@ import {
   defineFlow,
   useFlow,
   type CairnEvent,
-} from "react-cairn";
+} from "cairn-react";
 import { CairnPopover, CairnSpotlight } from "cairn-ui";
 
 /**

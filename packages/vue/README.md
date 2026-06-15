@@ -1,4 +1,4 @@
-# vue-cairn
+# cairn-vue
 
 Vue 3 bindings for [Cairn](https://github.com/tomymaritano/cairn) — the
 workflow engine for onboarding, product adoption, and user guidance. Composables
@@ -6,12 +6,12 @@ over the framework-agnostic [`cairn-core`](https://www.npmjs.com/package/cairn-c
 engine (which this package re-exports, so it's the only install you need).
 
 ```bash
-npm i vue-cairn
+npm i cairn-vue
 ```
 
 ```vue
 <script setup lang="ts">
-import { provideFlow, useFlow, defineFlow } from "vue-cairn";
+import { provideFlow, useFlow, defineFlow } from "cairn-vue";
 
 const onboarding = defineFlow({
   id: "onboarding",

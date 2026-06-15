@@ -1,5 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "pnpm --filter \"./packages/*\" build && pnpm --filter @cairn/docs build"
+  "buildCommand": "pnpm --filter \"cairn-*\" build && pnpm --filter @cairn/docs build"
 }

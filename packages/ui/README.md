@@ -5,7 +5,7 @@ flows. Cairn owns the hard parts — positioning and accessibility — and you o
 the content and styling.
 
 ```bash
-npm i cairn-ui react-cairn
+npm i cairn-ui cairn-react
 ```
 
 ## Components
@@ -54,4 +54,4 @@ For custom renderers:
 
 - The package is marked `"use client"` — safe to import from React Server
   Components.
-- `react-cairn` and `react` / `react-dom` are peer dependencies.
+- `cairn-react` and `react` / `react-dom` are peer dependencies.

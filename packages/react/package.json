@@ -1,5 +1,5 @@
 {
-  "name": "react-cairn",
+  "name": "cairn-react",
   "version": "0.2.0",
   "description": "React bindings for Cairn — hooks and provider for onboarding & guidance flows.",
   "license": "MIT",
