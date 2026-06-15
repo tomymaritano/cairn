@@ -46,4 +46,4 @@ function Tour() {
 Want accessible popover + spotlight out of the box? Add
 [`cairn-ui`](https://www.npmjs.com/package/cairn-ui).
 
-📖 **[Full documentation →](https://github.com/tomymaritano/cairn)**
+📖 **[Full documentation & live demo →](https://react-cairn.vercel.app)**

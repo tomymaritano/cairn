@@ -33,4 +33,4 @@ persistence/resume adapters.
 Using React? Install [`react-cairn`](https://www.npmjs.com/package/react-cairn)
 instead — it re-exports this package.
 
-📖 **[Full documentation →](https://github.com/tomymaritano/cairn)**
+📖 **[Full documentation & live demo →](https://react-cairn.vercel.app)**

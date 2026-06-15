@@ -8,7 +8,7 @@
 
 Cairn /kɛrn/ — _the stacked stones that mark a trail. You place the markers; your users find the way._
 
-[![license](https://img.shields.io/badge/license-MIT-black)](./LICENSE)
+[**Docs & live demo →**](https://react-cairn.vercel.app) · [![npm](https://img.shields.io/npm/v/react-cairn?color=black&label=react-cairn)](https://www.npmjs.com/package/react-cairn) · [![license](https://img.shields.io/badge/license-MIT-black)](./LICENSE)
 
 </div>
 
