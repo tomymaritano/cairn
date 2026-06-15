@@ -1,0 +1,38 @@
+{
+  "name": "svelte-cairn",
+  "version": "0.1.0",
+  "description": "Svelte bindings for Cairn — a store + controls for onboarding & guidance flows.",
+  "license": "MIT",
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "files": ["dist"],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "cairn-core": "workspace:^"
+  },
+  "peerDependencies": {
+    "svelte": ">=4"
+  },
+  "devDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "keywords": ["svelte", "onboarding", "product-tour", "user-guidance", "store"]
+}
