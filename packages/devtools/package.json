@@ -8,7 +8,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -44,5 +46,21 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
-  "keywords": ["cairn", "devtools", "flow", "graph", "visualizer", "react-flow"]
+  "keywords": [
+    "cairn",
+    "devtools",
+    "flow",
+    "graph",
+    "visualizer",
+    "react-flow"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/devtools"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }

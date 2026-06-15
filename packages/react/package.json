@@ -47,5 +47,14 @@
     "product-tour",
     "user-guidance",
     "hooks"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }

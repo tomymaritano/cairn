@@ -34,5 +34,14 @@
     "workflow-engine",
     "state-machine",
     "product-adoption"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }

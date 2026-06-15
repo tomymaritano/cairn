@@ -8,7 +8,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,5 +36,20 @@
   "devDependencies": {
     "svelte": "^5.0.0"
   },
-  "keywords": ["svelte", "onboarding", "product-tour", "user-guidance", "store"]
+  "keywords": [
+    "svelte",
+    "onboarding",
+    "product-tour",
+    "user-guidance",
+    "store"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/svelte"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }

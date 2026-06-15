@@ -8,7 +8,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,5 +37,21 @@
   "devDependencies": {
     "cairn-core": "workspace:^"
   },
-  "keywords": ["cairn", "ai", "flow", "generate", "onboarding", "codegen"]
+  "keywords": [
+    "cairn",
+    "ai",
+    "flow",
+    "generate",
+    "onboarding",
+    "codegen"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/ai"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }

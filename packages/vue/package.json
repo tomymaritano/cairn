@@ -8,7 +8,9 @@
     "access": "public"
   },
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -36,5 +38,20 @@
     "jsdom": "^25.0.0",
     "vue": "^3.5.0"
   },
-  "keywords": ["vue", "onboarding", "product-tour", "user-guidance", "composables"]
+  "keywords": [
+    "vue",
+    "onboarding",
+    "product-tour",
+    "user-guidance",
+    "composables"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomymaritano/cairn.git",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://react-cairn.vercel.app",
+  "bugs": {
+    "url": "https://github.com/tomymaritano/cairn/issues"
+  }
 }
