@@ -1,5 +1,12 @@
 # @cairn/playground
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [b9d01cd]
+  - cairn-ui@0.3.0
+
 ## 0.0.3
 
 ### Patch Changes

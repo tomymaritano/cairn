@@ -1,6 +1,6 @@
 {
   "name": "cairn-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Headless, accessible UI primitives for Cairn flows — spotlight & anchored popover.",
   "license": "MIT",
   "type": "module",
