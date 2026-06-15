@@ -287,7 +287,7 @@ function Tab({ id, label, current }: { id?: string; label: string; current: bool
 }
 
 function PopoverCard({ title, body }: { title: string; body: string }) {
-  const { state, back, skip, dismiss } = useFlow<DemoCtx>();
+  const { state, next, back, skip, dismiss } = useFlow<DemoCtx>();
   const last = state.currentStep?.next == null;
   return (
     <>
@@ -318,12 +318,20 @@ function PopoverCard({ title, body }: { title: string; body: string }) {
             Finish
           </button>
         ) : (
-          <button
-            onClick={skip}
-            className="rounded-md px-2.5 py-1 text-xs text-fd-muted-foreground"
-          >
-            Skip
-          </button>
+          <>
+            <button
+              onClick={next}
+              className="rounded-md bg-fd-primary px-2.5 py-1 text-xs text-fd-primary-foreground"
+            >
+              Next
+            </button>
+            <button
+              onClick={skip}
+              className="rounded-md px-2.5 py-1 text-xs text-fd-muted-foreground"
+            >
+              Skip
+            </button>
+          </>
         )}
       </div>
     </>
