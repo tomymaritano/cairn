@@ -38,3 +38,11 @@ Toggle **Usage 90%** and watch the agent reason its way to a *different* route o
 the next run — billing when you're near your limit, team when there's headroom.
 
 <AgenticDemo />
+
+By default the demo runs the deterministic `SimAgent`. A real `LLMAgent` ships
+behind the same interface, backed by an `/api/agent` route that asks a model
+through the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway). It's
+**off by default** — calling a model on every visit is a cost/abuse hole — and
+turns on with `CAIRN_LLM_ENABLED=1` (server) + `NEXT_PUBLIC_CAIRN_LLM=1`
+(client), with `SimAgent` as an automatic fallback. Add rate-limiting (e.g.
+Vercel BotID) before exposing it publicly.

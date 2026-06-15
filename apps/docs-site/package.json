@@ -10,14 +10,16 @@
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit"
   },
   "dependencies": {
-    "react-cairn": "workspace:*",
+    "ai": "^6.0.205",
     "cairn-ui": "workspace:*",
     "fumadocs-core": "^16.10.2",
     "fumadocs-mdx": "^15.0.12",
     "fumadocs-ui": "^16.10.2",
     "next": "16.2.9",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-cairn": "workspace:*",
+    "react-dom": "^19.2.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",

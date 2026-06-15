@@ -84,7 +84,48 @@ class SimAgent implements DemoAgent {
   }
 }
 
-const agent: DemoAgent = new SimAgent();
+/**
+ * Real-LLM agent: posts the user state to `/api/agent`, which asks a model
+ * (via the Vercel AI Gateway) for a structured `{ next, reason }`. Same
+ * `DemoAgent` interface as `SimAgent` — that's the whole point of the seam.
+ */
+class LLMAgent implements DemoAgent {
+  async decide(ctx: DemoCtx, signal?: AbortSignal): Promise<{ next: View; reason: string }> {
+    const state = await fetchUserState(ctx);
+    const res = await fetch("/api/agent", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ state }),
+      signal,
+    });
+    if (!res.ok) throw new Error(`agent route ${res.status}`);
+    return res.json();
+  }
+}
+
+/** Tries the primary agent, falls back to the secondary on any error — so a
+ *  disabled/rate-limited LLM route never breaks the public demo. */
+class ResilientAgent implements DemoAgent {
+  constructor(
+    private readonly primary: DemoAgent,
+    private readonly fallback: DemoAgent,
+  ) {}
+  async decide(ctx: DemoCtx, signal?: AbortSignal): Promise<{ next: View; reason: string }> {
+    try {
+      return await this.primary.decide(ctx, signal);
+    } catch {
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+      return this.fallback.decide(ctx, signal);
+    }
+  }
+}
+
+// Real AI is opt-in: set NEXT_PUBLIC_CAIRN_LLM=1 (client) + CAIRN_LLM_ENABLED=1
+// (server) to use the model, with SimAgent as a safety net. Default: SimAgent.
+const agent: DemoAgent =
+  process.env.NEXT_PUBLIC_CAIRN_LLM === "1"
+    ? new ResilientAgent(new LLMAgent(), new SimAgent())
+    : new SimAgent();
 
 function delay<T>(ms: number, fn: () => Promise<T> | T, signal?: AbortSignal): Promise<T> {
   return new Promise((resolve, reject) => {
