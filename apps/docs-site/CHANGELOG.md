@@ -1,5 +1,13 @@
 # @cairn/docs
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [d04d874]
+  - cairn-react@0.2.1
+  - cairn-ui@0.2.0
+
 ## 0.0.1
 
 ### Patch Changes

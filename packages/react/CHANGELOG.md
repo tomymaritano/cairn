@@ -1,5 +1,13 @@
 # cairn-react
 
+## 0.2.1
+
+### Patch Changes
+
+- d04d874: Mark the package as a Client Component (`"use client"`), so `FlowProvider`,
+  `useFlow`, and `useCurrentStep` can be imported in React Server Component
+  trees (Next.js App Router) without a server-component error.
+
 ## 0.2.0
 
 ### Minor Changes
