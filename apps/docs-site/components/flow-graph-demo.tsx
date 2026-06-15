@@ -14,11 +14,19 @@ const flow = defineFlow<Ctx>({
   id: "devtools-demo",
   initialContext: { highUsage: false },
   steps: [
-    { id: "welcome", next: "decide" },
+    {
+      // A brief `run` so the flow auto-advances on Start — the point of the demo
+      // is to watch it trace itself, with no manual "Next".
+      id: "welcome",
+      async run() {
+        await new Promise((r) => setTimeout(r, 400));
+      },
+      next: "decide",
+    },
     {
       id: "decide",
       async run() {
-        await new Promise((r) => setTimeout(r, 600)); // "thinking"
+        await new Promise((r) => setTimeout(r, 700)); // "thinking"
       },
       next: (ctx) => (ctx.highUsage ? "billing" : "team"),
       meta: { targets: ["billing", "team"] }, // hint → dotted "possible" edges
