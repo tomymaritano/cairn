@@ -50,7 +50,9 @@ export function App() {
 
       {/* The entire guided UI is now two components from cairn-ui. */}
       <CairnSpotlight padding={6} />
-      <CairnPopover className="cairn-card">
+      {/* Don't dismiss/trap on outside interaction — the dock toggles (e.g.
+          hasTeam) live outside the popover and should drive the flow, not end it. */}
+      <CairnPopover className="cairn-card" trapFocus={false} dismissOnInteractOutside={false}>
         {(step) => <StepCard title={String(step.meta?.title)} body={String(step.meta?.body ?? "")} />}
       </CairnPopover>
 
