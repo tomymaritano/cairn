@@ -12,7 +12,8 @@
     "play": "pnpm --filter @cairn/playground dev",
     "test": "pnpm -r test",
     "typecheck": "pnpm -r typecheck",
-    "verify": "pnpm build && pnpm typecheck && pnpm test",
+    "verify": "pnpm --filter \"./packages/*\" build && pnpm --filter \"./packages/*\" typecheck && pnpm --filter \"./packages/*\" test",
+    "docs": "pnpm --filter @cairn/docs dev",
     "clean": "pnpm -r clean"
   },
   "devDependencies": {

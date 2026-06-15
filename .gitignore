@@ -6,3 +6,8 @@ coverage/
 .turbo/
 .vercel/
 *.log
+
+# next / fumadocs generated
+.next/
+.source/
+next-env.d.ts

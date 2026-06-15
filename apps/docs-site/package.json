@@ -1,0 +1,30 @@
+{
+  "name": "@cairn/docs",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "fumadocs-mdx",
+    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "fumadocs-core": "^16.10.2",
+    "fumadocs-mdx": "^15.0.12",
+    "fumadocs-ui": "^16.10.2",
+    "next": "16.2.9",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.9.0"
+  }
+}
