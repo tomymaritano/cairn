@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "quickstart",
+    "agentic",
     "concepts",
     "branching",
     "persistence",

@@ -13,6 +13,14 @@ export interface CairnEventMap<C extends object = FlowContext> {
   "flow:dismiss": { flowId: string; state: FlowState<C> };
   "step:enter": { flowId: string; step: StepDefinition<C>; state: FlowState<C> };
   "step:exit": { flowId: string; step: StepDefinition<C>; state: FlowState<C> };
+  "step:run:start": { flowId: string; step: StepDefinition<C>; state: FlowState<C> };
+  "step:run:success": { flowId: string; step: StepDefinition<C>; state: FlowState<C> };
+  "step:run:error": {
+    flowId: string;
+    step: StepDefinition<C>;
+    error: Error;
+    state: FlowState<C>;
+  };
   "context:update": { flowId: string; patch: Partial<C>; state: FlowState<C> };
 }
 

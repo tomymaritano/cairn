@@ -14,6 +14,8 @@ export interface FlowControls<C extends object> {
   setContext: (patch: Partial<C>) => void;
   /** Clear persisted progress and return to idle (replay onboarding). */
   reset: () => void;
+  /** Clear the current step's `error` and re-run its `run`. */
+  retry: () => void;
 }
 
 /**
@@ -53,5 +55,6 @@ function bindControls<C extends object>(engine: FlowEngine<C>) {
     dismiss: () => engine.dismiss(),
     setContext: (patch: Partial<C>) => engine.setContext(patch),
     reset: () => engine.reset(),
+    retry: () => engine.retry(),
   };
 }

@@ -34,6 +34,20 @@ export interface StepDefinition<C extends object = FlowContext> {
   readonly canEnter?: StepGuard<C>;
   /** Renderer-facing payload: target selector, title, body, placement… */
   readonly meta?: Record<string, unknown>;
+  /**
+   * An async action run on entering the step. It receives a read-only view
+   * of the context and an `AbortSignal` (aborted if the flow leaves the step
+   * mid-flight). On success its returned patch is merged into the context and
+   * the flow auto-advances via `next`; on rejection the engine routes to
+   * `onError` or exposes the error on the state. Runs should be idempotent —
+   * they re-execute when a persisted flow resumes on this step.
+   */
+  readonly run?: (
+    ctx: Readonly<C>,
+    signal: AbortSignal,
+  ) => Promise<Partial<C> | void>;
+  /** Where to go if `run` rejects. Default: stay on the step + expose error. */
+  readonly onError?: StepTarget<C>;
 }
 
 export interface FlowDefinition<C extends object = FlowContext> {
@@ -63,4 +77,8 @@ export interface FlowState<C extends object = FlowContext> {
   readonly history: ReadonlyArray<string>;
   readonly stepIndex: number;
   readonly totalSteps: number;
+  /** True while the current step's `run` action is in flight. */
+  readonly running: boolean;
+  /** The last `run` rejection on the current step, or null. */
+  readonly error: Error | null;
 }

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from "vitest";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FlowProvider, defineFlow, useFlow } from "react-cairn";
 import { CairnPopover } from "./popover.js";
 import { CairnSpotlight } from "./spotlight.js";
@@ -67,6 +67,58 @@ describe("CairnPopover", () => {
     renderTour();
     fireEvent.click(screen.getByText("skip"));
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+});
+
+/** A promise whose resolution we control from the test. */
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((res) => {
+    resolve = res;
+  });
+  return { promise, resolve };
+}
+
+describe("CairnPopover run state", () => {
+  it("exposes data-cairn-running while a run step is in flight", async () => {
+    const gate = deferred<void>();
+    const runFlow = defineFlow({
+      id: "run-tour",
+      steps: [
+        {
+          id: "thinking",
+          next: "done",
+          meta: { target: "#anchor", title: "Thinking" },
+          run: async () => {
+            await gate.promise;
+          },
+        },
+        { id: "done", next: null, meta: { target: "#anchor", title: "Done" } },
+      ],
+    });
+
+    render(
+      <FlowProvider flow={runFlow} options={{ autoStart: true }}>
+        <div id="anchor">anchor</div>
+        <CairnPopover>{(step) => <h3>{String(step.meta?.title)}</h3>}</CairnPopover>
+      </FlowProvider>,
+    );
+
+    // The run is in flight: the popover root advertises the running state.
+    const dialog = await screen.findByRole("dialog");
+    expect(dialog.getAttribute("data-step")).toBe("thinking");
+    expect(dialog.hasAttribute("data-cairn-running")).toBe(true);
+
+    // Settle the run; it auto-advances and the running flag clears.
+    await act(async () => {
+      gate.resolve();
+      await gate.promise;
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole("dialog").getAttribute("data-step")).toBe("done");
+    });
+    expect(screen.getByRole("dialog").hasAttribute("data-cairn-running")).toBe(false);
   });
 });
 
