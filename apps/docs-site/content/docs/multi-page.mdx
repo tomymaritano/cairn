@@ -1,0 +1,101 @@
+---
+title: Multi-page flows (Next.js)
+description: Guide users across several pages with one flow — the engine survives navigation when it lives above the router and persists progress.
+---
+
+# Multi-page flows
+
+A Cairn flow can span several pages. The engine is decoupled from the DOM, so it
+survives navigation **as long as it lives above the router and persists its
+progress**. Three pieces make it work.
+
+## 1. One engine, high in the tree, persisted
+
+Build the engine once with a persistence adapter and provide it from your root
+layout, so a step's progress survives client navigations *and* full reloads.
+
+```tsx title="app/cairn-provider.tsx"
+"use client";
+import { useMemo } from "react";
+import { FlowProvider, FlowEngine, createWebStorageAdapter } from "cairn-react";
+import { onboarding } from "@/flows/onboarding";
+
+export function CairnProvider({ children, userId }: { children: React.ReactNode; userId: string }) {
+  const engine = useMemo(
+    () =>
+      new FlowEngine(onboarding, {
+        persistence: { adapter: createWebStorageAdapter(), namespace: userId },
+      }),
+    [userId],
+  );
+  return <FlowProvider engine={engine}>{children}</FlowProvider>;
+}
+```
+
+```tsx title="app/layout.tsx"
+import { CairnProvider } from "./cairn-provider";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <CairnProvider userId={getUserId()}>{children}</CairnProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+`cairn-react` is a Client Component (`"use client"`), so it composes cleanly
+inside a Server Component layout.
+
+## 2. Steps target elements on different routes
+
+Each step's `meta.target` is a CSS selector. The UI primitives resolve it with a
+`MutationObserver`, so when the user lands on the route where the target mounts,
+the popover/spotlight attach automatically — no manual wiring per page.
+
+```ts
+defineFlow({
+  id: "onboarding",
+  steps: [
+    { id: "welcome",  next: "billing", meta: { target: "#dashboard-logo", title: "Welcome 👋" } },
+    { id: "billing",  next: "team",    meta: { target: "#billing-plan",  title: "Your plan" } },   // on /billing
+    { id: "team",     next: null,      meta: { target: "#invite-button", title: "Invite" } },       // on /team
+  ],
+});
+```
+
+## 3. Drive navigation from a step (optional)
+
+If the tour should *take* the user to the next page, navigate inside a `run`
+step — it advances automatically once navigation kicks off:
+
+```ts
+import { useRouter } from "next/navigation";
+// inside a component that owns the router, or pass router into context:
+{
+  id: "go-billing",
+  async run() {
+    router.push("/billing");
+  },
+  next: "billing",
+}
+```
+
+Or just let the user navigate normally — the next step's target mounts on the
+new route and the guidance follows.
+
+## Resuming across reloads
+
+Because the engine is persisted, a hard refresh or a return visit **resumes at
+the saved step**, and a flow the user already completed won't reappear (see
+[Persistence](/docs/persistence)). For per-user state, set `namespace` to the
+user id as shown above.
+
+## Checklist
+
+- [x] `FlowProvider` lives in the root layout (above the router).
+- [x] The engine has a `persistence` adapter.
+- [x] Each step's `meta.target` selector exists on its route.
+- [x] Navigation happens via a `run` step or normal user action.

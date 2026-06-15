@@ -17,13 +17,15 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm verify && changeset publish",
-    "clean": "pnpm -r clean"
+    "clean": "pnpm -r clean",
+    "e2e": "playwright test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "@playwright/test": "^1.49.0"
   },
   "pnpm": {
     "overrides": {
