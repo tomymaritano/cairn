@@ -1,0 +1,41 @@
+---
+title: Devtools — FlowGraph
+description: Visualize a flow as a graph — its static structure, and the live runtime trace as it runs.
+---
+
+# Devtools — `<FlowGraph>`
+
+Complex flows are hard to read as code. `cairn-devtools` renders any flow as a
+graph — steps as nodes, `next`/`onError` as edges — and, when you hand it a live
+engine, **lights up the running flow in real time**.
+
+```bash
+npm i cairn-devtools
+```
+
+```tsx
+import { FlowGraph } from "cairn-devtools";
+import "@xyflow/react/dist/style.css"; // once, app-wide
+
+<FlowGraph flow={onboarding} engine={engine} />;
+```
+
+## Try it
+
+Press **Run** and watch the graph trace the path — `decide` pulses while the
+async step "thinks", then the taken edge animates to the chosen view. Flip
+**Usage 90%** and run again to see it branch the other way.
+
+<FlowGraphDemo />
+
+## What it shows
+
+- **Edges** — solid for a string `next`, dashed red for `onError`, dotted for the
+  *possible* targets of a dynamic step (declared via `meta.targets`).
+- **Badges** — `▶ start`, `■ end`, `⚡ async` (`run` steps), `🔒 guard`
+  (`canEnter`), `↯ dynamic` (function `next`/`onError`).
+- **Live trace** (with `engine`) — the current step, the visited path, the
+  `running`/`error` state, and the edges *actually taken* (revealing the dynamic
+  branches static analysis can't).
+
+Read-only by design — a visual editor that *authors* flows is a separate effort.

@@ -12,6 +12,8 @@
   "dependencies": {
     "react-cairn": "workspace:*",
     "cairn-ui": "workspace:*",
+    "cairn-devtools": "workspace:*",
+    "@xyflow/react": "^12.3.0",
     "fumadocs-core": "^16.10.2",
     "fumadocs-mdx": "^15.0.12",
     "fumadocs-ui": "^16.10.2",

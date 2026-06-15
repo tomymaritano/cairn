@@ -3,6 +3,7 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import type { MDXComponents } from 'mdx/types';
 import { LiveDemo } from '@/components/live-demo';
 import { AgenticDemo } from '@/components/agentic-demo';
+import { FlowGraphDemo } from '@/components/flow-graph-demo';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {
@@ -11,6 +12,7 @@ export function getMDXComponents(components?: MDXComponents) {
     Tabs,
     LiveDemo,
     AgenticDemo,
+    FlowGraphDemo,
     ...components,
   } satisfies MDXComponents;
 }

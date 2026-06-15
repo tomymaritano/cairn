@@ -1,5 +1,6 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import './global.css';
+import '@xyflow/react/dist/style.css';
 import type { ReactNode } from 'react';
 
 export default function Layout({ children }: { children: ReactNode }) {
